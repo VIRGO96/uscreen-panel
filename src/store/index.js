@@ -5,10 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    active_route:'Users'
+  },
+  getters:{
+    active_route: (state) => {return state.active_route}
   },
   mutations: {
+    changeRoute(state,payload){
+      state.active_route=payload
+    }
   },
   actions: {
+    
   },
   modules: {
   }

@@ -5,16 +5,20 @@
        <div class="d-flex d-md-flex">
          <img  align="left"
               style="width: 80px;
-              height: 30px;"
+              height: 20px;"
           alt="Vue logo" src="../assets/logo.png">
        </div>
        <div class="mt-2">
          <b-row>
-            <b-col md="1" class="text-left pr-0 text-orange">
-              Users
+            <b-col md="1" class="text-left pr-0 ">
+              <router-link to="/">
+               <span :class="active_route=='Users' ? 'text-orange': 'text-gray'">Users</span>
+              </router-link>
             </b-col>
-            <b-col md="1" class="text-left pl-0  text-gray">
-               Orders
+            <b-col  md="1" style="cursor:pointer;" class="text-left pl-0 ">
+               <router-link to="/orders">
+                 <span :class="active_route=='Orders' ? 'text-orange': 'text-gray'">Orders</span> 
+               </router-link>
             </b-col>
          </b-row>
        </div>
@@ -24,10 +28,14 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  name: 'HelloWorld',
+  name: 'Header',
   props: {
     msg: String
+  },
+  computed:{
+    ...mapGetters(['active_route'])
   }
 }
 </script>
