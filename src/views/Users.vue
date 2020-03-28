@@ -32,8 +32,8 @@
     </b-container> -->
     <b-container class="card bg-white mt-2 pb-5 pt-2">
       <div class="text-left">
-        <b-button pill variant="primary" class="pl-5 pr-5" >Employers</b-button>
-        <b-button class="ml-2 pl-5 pr-5" pill variant="outline-primary" >Individuals</b-button>
+        <b-button @click="active_user='Employers'"  pill :variant="active_user=='Employers' ? 'primary':'outline-primary'" class="pl-5 pr-5" >Employers</b-button>
+        <b-button @click="active_user='Individuals'" class="ml-2 pl-5 pr-5" pill :variant="active_user=='Individuals' ? 'primary':'outline-primary'" >Individuals</b-button>
       </div>
       <div class="mt-2 text-left text-primary">
        <h4 >Filtering</h4> 
@@ -55,7 +55,7 @@
            </b-col>
         </b-row>
         <b-row class="mt-2">
-           <b-col md="6" class="text-left">
+           <b-col md="11" class="text-left">
              <div class="d-flex d-md-flex">
                 <b-form-checkbox class="self-center">
                 Sign Up From
@@ -160,7 +160,9 @@
               <!-- <div class="bg-success rounded p-1 text-white">{{ data.item.status }}</div> -->
               <!-- <b-badge  style="" pill>{{ data.item.status }}</b-badge> -->
               <b-badge :class="data.item.status=='Enabled' ? '':'bg-white'" :style="data.item.status=='Enabled' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
-              
+              <router-link to="/user-details">
+                <span class="ml-2 fa fa-eye text-primary"></span>
+              </router-link>
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
                
@@ -198,6 +200,7 @@ export default {
     },
     data() {
         return {
+          active_user:'employers',
            items: [
             { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
             { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
