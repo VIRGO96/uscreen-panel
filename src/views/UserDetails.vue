@@ -70,10 +70,10 @@
      
     </b-container>
     <b-modal id="modal-1" hide-header hide-footer>
+      <b-container class="p-4">
       <h5 class="text-primary">Confirm Refund ?</h5>
       <p class="text-muted">Upon confirmation , an email will be sent  to the user to advice that payment has been received.</p>
-      <b-container class="p-4">
-        <b-row>
+        <b-row class="mt-2">
            <b-col style="align-self:center" class="text-right">
             <span  style="font-size:13px;"> <b>Refund amount</b> </span>  
            </b-col>
