@@ -4,7 +4,7 @@
     <SecondaryHeader msg="Welcome to Your Vue.js App"/>
     <b-container class="card bg-white mt-2 pb-5 pt-2">
       <div class="mt-2 text-left text-primary">
-       <h4 >Filter</h4> 
+       <h4>Filter</h4> 
       </div>
       <div>
         <b-row>
@@ -174,8 +174,8 @@
               <!-- <b-badge  style="" pill>{{ data.item.status }}</b-badge> -->
               <b-badge v-if="data.item.status=='done'" :class="data.item.status=='done' ? '':'bg-white'" :style="data.item.status=='done' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
               <b-badge v-else-if="data.item.status=='cancelled'" class="bg-white"  style="background-color:#0071ce;color:#0071ce;border:1px solid #0071ce" pill>{{ data.item.status }}</b-badge>
-              <b-badge v-else-if="data.item.status=='pending'" class="text-orange bg-white" style="border:1px solid #d87128;" pill>{{ data.item.status }}</b-badge>
-              <span v-b-modal.confirm-settlement class="ml-2 fa fa-eye text-primary"></span>
+              <b-badge  v-b-modal.actions v-else-if="data.item.status=='pending'" class="text-orange bg-white" style="cursor:pointer;border:1px solid #d87128;" pill>{{ data.item.status }}</b-badge>
+              <span  class="ml-2 fa fa-eye text-primary"></span>
 
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -198,19 +198,19 @@
       <h5 class="text-primary pt-3 pb-4">Actions</h5>
         <b-row>
            <b-col >
-            <b-button block pill variant="primary" class="pr-4 pl-4" > Confirm Payment</b-button>
+            <b-button block pill variant="primary" class="pr-4 pl-4" v-b-modal.order-confirm @click="$bvModal.hide('actions')"> Confirm Payment</b-button>
 
            </b-col>
         </b-row>
         <b-row class="mt-3">
            <b-col class="mt-1">
-             <b-button block pill variant="primary" class="pr-4 pl-4" > Cancel Order</b-button>
+             <b-button block pill variant="primary" class="pr-4 pl-4" v-b-modal.order-cancel  @click="$bvModal.hide('actions')"> Cancel Order</b-button>
            </b-col>
         </b-row>
         <b-row class="mt-3">
           
            <b-col  class="text-main text-center">
-             <b-button pill variant="light" class="pr-5 pl-5 " style="border:1px solid #dcdcdc"> Back</b-button>
+             <b-button pill variant="light" class="pr-5 pl-5 " style="border:1px solid #dcdcdc" @click="$bvModal.show('actions')"> Back</b-button>
            </b-col>
         </b-row>
       </b-container>
@@ -224,12 +224,12 @@
              <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
            </b-col>
            <b-col  class="text-main">
-             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc"> Cancel</b-button>
+             <b-button pill variant="light" class="pr-4 pl-4" @click="$bvModal.hide('order-cancel')" style="border:1px solid #dcdcdc"> Cancel</b-button>
            </b-col>
       </b-row>
       </b-container>
     </b-modal>
-    <b-modal id="confirm-settlement" hide-header hide-footer>
+    <b-modal id="order-confirm" hide-header hide-footer>
       <b-container>
       <h5 class="text-primary pt-3">Confirm Settlement?</h5>
       <p class="text-muted">Upon confirmation , an email will be sent  to the user to advice that payment has been received.</p>
@@ -270,7 +270,7 @@
              <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
            </b-col>
            <b-col  class="text-main">
-             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc"> Cancel</b-button>
+             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc" @click="$bvModal.hide('order-confirm')"> Cancel</b-button>
            </b-col>
       </b-row>
       </b-container>
