@@ -175,7 +175,8 @@
               <b-badge v-if="data.item.status=='done'" :class="data.item.status=='done' ? '':'bg-white'" :style="data.item.status=='done' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
               <b-badge v-else-if="data.item.status=='cancelled'" class="bg-white"  style="background-color:#0071ce;color:#0071ce;border:1px solid #0071ce" pill>{{ data.item.status }}</b-badge>
               <b-badge v-else-if="data.item.status=='pending'" class="text-orange bg-white" style="border:1px solid #d87128;" pill>{{ data.item.status }}</b-badge>
-              
+              <span v-b-modal.confirm-settlement class="ml-2 fa fa-eye text-primary"></span>
+
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
                
@@ -192,7 +193,88 @@
       </div>
 
     </b-container>
+    <b-modal id="actions" hide-header hide-footer>
+      <b-container>
+      <h5 class="text-primary pt-3 pb-4">Actions</h5>
+        <b-row>
+           <b-col >
+            <b-button block pill variant="primary" class="pr-4 pl-4" > Confirm Payment</b-button>
 
+           </b-col>
+        </b-row>
+        <b-row class="mt-3">
+           <b-col class="mt-1">
+             <b-button block pill variant="primary" class="pr-4 pl-4" > Cancel Order</b-button>
+           </b-col>
+        </b-row>
+        <b-row class="mt-3">
+          
+           <b-col  class="text-main text-center">
+             <b-button pill variant="light" class="pr-5 pl-5 " style="border:1px solid #dcdcdc"> Back</b-button>
+           </b-col>
+        </b-row>
+      </b-container>
+    </b-modal>
+    <b-modal id="order-cancel" hide-header hide-footer>
+      <b-container>
+      <h5 class="text-primary pt-3">Confirm Cancel Order ?</h5>
+      <p class="text-muted">Upon cancellation , an email will be sent  to the user to advice that order has been cancelled.</p>
+      <b-row class="mt-3 pt-4 pb-3">
+           <b-col class="text-right" >
+             <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
+           </b-col>
+           <b-col  class="text-main">
+             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc"> Cancel</b-button>
+           </b-col>
+      </b-row>
+      </b-container>
+    </b-modal>
+    <b-modal id="confirm-settlement" hide-header hide-footer>
+      <b-container>
+      <h5 class="text-primary pt-3">Confirm Settlement?</h5>
+      <p class="text-muted">Upon confirmation , an email will be sent  to the user to advice that payment has been received.</p>
+      <b-row class="mt-3 pt-4">
+           <b-col >
+             <h6><b>Transaction ID</b> </h6>
+           </b-col>
+           <b-col  class="text-main">
+          <input placeholder="Transaction ID" class="rounded form-control col-md-12">
+           </b-col>
+      </b-row>
+      <b-row class="mt-1">
+           <b-col class="text-left" >
+             <h6><b>Re-enter Transaction ID</b> </h6>
+           </b-col>
+           <b-col  class="text-main">
+          <input placeholder="Enter Order ID" class="rounded form-control col-md-12">
+           </b-col>
+      </b-row>
+      <b-row class="mt-1">
+           <b-col class="text-left" >
+             <h6><b>Payment Date</b> </h6>
+           </b-col>
+           <b-col  class="text-main">
+              <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
+           </b-col>
+      </b-row>
+      <b-row class="mt-1">
+           <b-col class="text-left" >
+             <h6><b>Order ID</b> </h6>
+           </b-col>
+           <b-col  class="text-main">
+          <input placeholder="Enter Order ID" class="rounded form-control col-md-12">
+           </b-col>
+      </b-row>
+       <b-row class="mt-3">
+           <b-col class="text-right" >
+             <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
+           </b-col>
+           <b-col  class="text-main">
+             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc"> Cancel</b-button>
+           </b-col>
+      </b-row>
+      </b-container>
+    </b-modal>
   </div>
 </template>
 
@@ -249,6 +331,8 @@ export default {
 .breadcrumb {
   padding-left:0rem !important;
   padding-top:0rem !important
-
+}
+.rounded{
+ border-radius: 1.25rem !important
 }
 </style>
