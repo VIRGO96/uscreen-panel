@@ -19,13 +19,13 @@
            <div style="margin-top:-30px; !important">
               <apexchart type="bar" height="100" :options="chartOptions" :series="series"></apexchart>
           </div>
-          <div style="position: absolute;top: 3.5rem;left: 4rem;">Page Views</div>
+          <div class="page-text">Page Views</div>
          </b-col>
           <b-col md="2" style="position:relative">
             <div style="margin-top:-30px; !important">
                    <apexchart type="bar" height="100" :options="secchartOptions" :series="series"></apexchart>
             </div>
-            <div style="position: absolute;top: 3.5rem;left: 5rem;">Visitors</div>
+            <div class="visitor-text">Visitors</div>
 
          </b-col>
       </b-row>
@@ -154,4 +154,38 @@ export default {
   }
 }
 </script>
+
+<style  scoped>
+/* Desktops and laptops ----------- */
+@media only screen  and (min-width : 1224px) {
+.visitor-text{
+    position: absolute;
+    top: 3.5rem;
+    left: 5rem;
+}
+
+.page-text{
+    position: absolute;
+    top: 3.5rem;
+    left: 4rem;
+}
+
+
+
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+.visitor-text{
+    position: absolute;
+    top: 3.6rem;
+    left: 10rem;
+}
+
+.page-text{
+    position: absolute;
+    top: 3.7rem;
+    left: 9rem;
+}
+}
+</style>
 

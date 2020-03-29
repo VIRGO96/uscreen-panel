@@ -31,21 +31,21 @@
       </b-row>
     </b-container> -->
     <b-container class="card bg-white mt-2 pb-5 pt-2">
-      <div class="text-left">
+      <div class="text-md-left">
         <b-button @click="active_user='Employers'"  pill :variant="active_user=='Employers' ? 'primary':'outline-primary'" class="pl-5 pr-5" >Employers</b-button>
-        <b-button @click="active_user='Individuals'" class="ml-2 pl-5 pr-5" pill :variant="active_user=='Individuals' ? 'primary':'outline-primary'" >Individuals</b-button>
+        <b-button @click="active_user='Individuals'" class="mt-xs-1 ml-md-2 pl-5 pr-5" pill :variant="active_user=='Individuals' ? 'primary':'outline-primary'" >Individuals</b-button>
       </div>
-      <div class="mt-2 text-left text-primary">
+      <div class="mt-2 text-md-left text-primary">
        <h4 >Filtering</h4> 
       </div>
       <div>
         <b-row>
-           <b-col md="6" class="text-left">
-             <div class="d-flex d-md-flex">
-                <b-form-checkbox class="self-center">
+           <b-col md="6" class="text-md-left">
+             <div class="d-block d-md-flex">
+                <b-form-checkbox class="mt-xs-1 self-center">
                 Company
               </b-form-checkbox>
-              <select name="" class="ml-5 form-control" id="">
+              <select name="" class="ml-md-5 mt-xs-1  form-control" id="">
                 <option value="Company A">company A</option>
                 <option value="Company B">company B</option>
 
@@ -55,16 +55,16 @@
            </b-col>
         </b-row>
         <b-row class="mt-2">
-           <b-col md="11" class="text-left">
-             <div class="d-flex d-md-flex">
-                <b-form-checkbox class="self-center">
+           <b-col md="11" class="text-mdleft">
+             <div class="d-block d-md-flex">
+                <b-form-checkbox class="mt-xs-1 self-center">
                 Sign Up From
               </b-form-checkbox>
-              <div class="ml-3">
+              <div class="ml-md-3 mt-xs-1">
               <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
               </div>
-              <div class="ml-1 self-center" >to</div>
-              <div class="ml-1">
+              <div class="ml-1 self-center mt-xs-1" >to</div>
+              <div class="ml-1 mt-xs-1">
               <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
               </div>
              </div>
@@ -72,9 +72,9 @@
            </b-col>
         </b-row>
          <b-row class="mt-2">
-           <b-col md="6" class="text-left">
-             <div class="d-flex d-md-flex">
-                <b-form-checkbox style="align-self:center;">
+           <b-col md="6" class="text-md-left">
+             <div class="d-block d-md-flex">
+                <b-form-checkbox class="mt-xs-1" style="align-self:center;">
                 Email Verified
               </b-form-checkbox>
               
@@ -88,14 +88,14 @@
         Search
         </div>
         <div class="ml-3">
-        <input class="form-control col-md-12">
+        <input class=" border-hids form-control col-md-12">
         </div>
       </div>
-       <div class="mt-2 mb-2 text-right">
+       <div class="mt-2 mb-2 text-md-right">
         <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button>
       </div>
       <div>
-        <b-table striped hover :fields="fields" :items="items"        
+        <b-table striped hover :responsive="true" :fields="fields" :items="items"        
           :current-page="currentPage"
           :per-page="perPage">
             <template v-slot:head(user_id)="data">
@@ -200,7 +200,7 @@ export default {
     },
     data() {
         return {
-          active_user:'employers',
+          active_user:'Employers',
            items: [
             { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
             { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
@@ -239,4 +239,6 @@ export default {
   padding-top:0rem !important
 
 }
+
+
 </style>

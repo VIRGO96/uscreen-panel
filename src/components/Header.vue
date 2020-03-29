@@ -2,20 +2,26 @@
   <div class="hello">
      <b-container style="padding-bottom:4rem;" class=" pr-5 pl-5 pt-3 bg-header" fluid>
        <b-container class="pl-0 pr-0">
-       <div class="d-flex d-md-flex">
-         <img  align="left"
+       <div class="d-none d-md-flex">
+         <img class="center-block"
+              style="width: 80px;
+              height: 20px;"
+          alt="Vue logo" src="../assets/logo.png">
+       </div>
+       <div class="d-block d-md-none">
+         <img class="center-block"
               style="width: 80px;
               height: 20px;"
           alt="Vue logo" src="../assets/logo.png">
        </div>
        <div class="mt-2">
          <b-row>
-            <b-col md="1" class="text-left pr-0 ">
+            <b-col md="1" cols="12" class="text-md-left pr-md-0 ">
               <router-link to="/">
                <span :class="active_route=='Users' ? 'text-orange': 'text-gray'">Users</span>
               </router-link>
             </b-col>
-            <b-col  md="1" style="cursor:pointer;" class="text-left pl-0 ">
+            <b-col  md="1" cols="12" style="cursor:pointer;" class="text-md-left pl-md-0 ">
                <router-link to="/orders">
                  <span :class="active_route=='Orders' ? 'text-orange': 'text-gray'">Orders</span> 
                </router-link>

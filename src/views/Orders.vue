@@ -8,12 +8,12 @@
       </div>
       <div>
         <b-row>
-           <b-col md="6" class="text-left">
-             <div class="d-flex d-md-flex">
+           <b-col md="6" cols="12" class="text-md-left">
+             <div class="d-block d-md-flex">
                 <b-form-checkbox class="self-center">
                 Package
               </b-form-checkbox>
-              <select name="" placeholder="Select Package" class="ml-5 form-control" id="">
+              <select name="" placeholder="Select Package" class="mt-xs-1 ml-md-5 form-control" id="">
                 <option value="Company A">Package A</option>
                 <option value="Company B">Package B</option>
 
@@ -23,16 +23,16 @@
            </b-col>
         </b-row>
         <b-row class="mt-2">
-           <b-col md="8" class="text-left">
-             <div class="d-flex d-md-flex">
-                <b-form-checkbox class="self-center">
+           <b-col md="8" cols="12" class="text-md-left">
+             <div class="d-block d-md-flex">
+                <b-form-checkbox class="mt-xs-1 self-center">
                 Order Date From
               </b-form-checkbox>
-              <div class="ml-5">
-              <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
+              <div class="cols-12 ml-md-5 mt-xs-1">
+              <b-form-datepicker style=" border-radius:1rem;" ></b-form-datepicker>
               </div>
-              <div class="ml-1 self-center" >to</div>
-              <div class="ml-1">
+              <div class="ml-1 self-center mt-xs-1" >to</div>
+              <div class="ml-1 mt-xs-1">
               <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
               </div>
              </div>
@@ -40,16 +40,16 @@
            </b-col>
         </b-row>
         <b-row class="mt-2">
-           <b-col md="8" class="text-left">
-             <div class="d-flex d-md-flex">
-                <b-form-checkbox class="self-center">
+           <b-col cols="12" md="8" class="text-md-left">
+             <div class="d-block d-md-flex">
+                <b-form-checkbox class="mt-xs-1 self-center">
                 Completion Date From
               </b-form-checkbox>
-              <div class="ml-3">
+              <div class="ml-md-3 mt-xs-1">
               <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
               </div>
-              <div class="ml-1 self-center" >to</div>
-              <div class="ml-1">
+              <div class="ml-1 self-center mt-xs-1" >to</div>
+              <div class="ml-1 mt-xs-1">
               <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
               </div>
              </div>
@@ -57,22 +57,34 @@
            </b-col>
         </b-row>
         <b-row>
-           <b-col md="8" class="mt-2 text-left">
-             <div class="d-flex d-md-flex">
-            <b-form-checkbox class="self-center">
+           <b-col md="6" cols="12" class="mt-2 text-md-left">
+             <div class="d-md-flex d-lg-flex d-none">               
+              <b-form-checkbox class="self-center">
               </b-form-checkbox>
               <div style="width:145px;" class="self-center">Package Type</div>
-              <select name="" placeholder="Select Package" class="form-control" id="">
-                <option value="Company A">Payment A</option>
-                <option value="Company B">Payment B</option>
-              </select>
-             </div>
+                <select name="" placeholder="Select Package" class="form-control" id="">
+                  <option value="Company A">Payment A</option>
+                  <option value="Company B">Payment B</option>
+                </select>
+              </div>
+
+           </b-col>
+           <b-col md="6" cols="12" class="mt-2 text-center">
+             <div class="d-md-none d-lg-none d-block">  
+              <b-form-checkbox class="mt-xs-1 self-center">
+                Package Type
+              </b-form-checkbox>
+                <select name="" placeholder="Select Package" class="mt-xs-1 form-control" id="">
+                  <option value="Company A">Payment A</option>
+                  <option value="Company B">Payment B</option>
+                </select>
+              </div>
 
            </b-col>
         </b-row>
         <b-row>
-           <b-col md="8" class="mt-2 text-left">
-             <div class="d-flex d-md-flex">
+           <b-col md="6" class="mt-2 text-left">
+             <div class="d-none d-md-flex">
             <b-form-checkbox class="self-center">
               </b-form-checkbox>
               <div style="width:145px;" class="self-center">Status</div>
@@ -83,32 +95,33 @@
              </div>
 
            </b-col>
-        </b-row>
-         <!-- <b-row class="mt-2">
-           <b-col md="6" class="text-left">
-             <div class="d-flex d-md-flex">
-                <b-form-checkbox style="align-self:center;">
-                Email Verified
+           <b-col md="6" cols="12" class="mt-2 text-center">
+             <div class="d-md-none d-lg-none d-block">  
+              <b-form-checkbox class="mt-xs-1 self-center">
+                Status
               </b-form-checkbox>
-              
-             </div>
+              <select name="" placeholder="Select Status" class="mt-xs-1 form-control" id="">
+                    <option value="Company A">status A</option>
+                <option value="Company B">status B</option>
+                </select>
+              </div>
 
            </b-col>
-        </b-row> -->
+        </b-row>
       </div>
-      <div class="mt-2 text-left d-flex">
+      <div class="mt-2 text-md-left d-flex">
         <div class="self-center">
         Search
         </div>
         <div class="ml-3">
-        <input class="form-control col-md-12">
+        <input class=" border-hids form-control col-md-12">
         </div>
       </div>
-       <div class="mt-2 mb-2 text-right">
+       <div class="mt-2 mb-2 text-md-right">
         <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button>
       </div>
       <div>
-        <b-table striped hover :fields="fields" :items="items"        
+        <b-table :responsive="true"  striped hover :fields="fields" :items="items"        
           :current-page="currentPage"
           :per-page="perPage">
             <template v-slot:head(order_id)="data">
