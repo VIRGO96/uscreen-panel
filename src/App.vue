@@ -24,6 +24,19 @@ export default {
 </script>
 
 <style>
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .mt-xs-1{
+      margin-top:1rem !important;
+  }
+}
+.border-hids{
+  border-left:none !important;
+  border-right:none !important; 
+  border-top:none !important;
+}
+.text-main{
+  color:#1c4694 !important;
+}
 .mt--50{
   margin-top:-50px;
 }
