@@ -161,7 +161,7 @@
               <!-- <b-badge  style="" pill>{{ data.item.status }}</b-badge> -->
               <b-badge :class="data.item.status=='Enabled' ? '':'bg-white'" :style="data.item.status=='Enabled' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
               <router-link to="/user-details">
-                <span class="ml-2 fa fa-eye text-primary"></span>
+                <span class="float-right ml-2 fa fa-eye text-primary"></span>
               </router-link>
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -174,6 +174,7 @@
               :total-rows="totalRows"
               :per-page="perPage"
               class="my-0"
+              pills
           ></b-pagination>
           </div>
       </div>

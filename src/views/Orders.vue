@@ -188,7 +188,7 @@
               <b-badge v-if="data.item.status=='done'" :class="data.item.status=='done' ? '':'bg-white'" :style="data.item.status=='done' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
               <b-badge v-else-if="data.item.status=='cancelled'" class="bg-white"  style="background-color:#0071ce;color:#0071ce;border:1px solid #0071ce" pill>{{ data.item.status }}</b-badge>
               <b-badge  v-b-modal.actions v-else-if="data.item.status=='pending'" class="text-orange bg-white" style="cursor:pointer;border:1px solid #d87128;" pill>{{ data.item.status }}</b-badge>
-              <span  class="ml-2 fa fa-eye text-primary"></span>
+              <span  class="float-right ml-2 fa fa-eye text-primary"></span>
 
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -201,6 +201,7 @@
               :total-rows="totalRows"
               :per-page="perPage"
               class="my-0"
+              pills
           ></b-pagination>
           </div>
       </div>
