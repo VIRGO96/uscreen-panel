@@ -37,9 +37,6 @@
 import {mapGetters} from 'vuex'
 export default {
   name: 'Header',
-  props: {
-    msg: String
-  },
   computed:{
     ...mapGetters(['active_route'])
   }
