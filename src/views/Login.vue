@@ -36,10 +36,6 @@ export default {
     components: {
         LoginHeader,
         LoginSecondaryHeader
-    },
-    data() {
-        return {
-      }
     }
 }
 </script>
