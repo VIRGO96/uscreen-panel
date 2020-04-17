@@ -3,12 +3,13 @@ import VueRouter from 'vue-router'
 import Users from '../views/Users.vue'
 import Orders from '../views/Orders.vue'
 import UserDetails from '../views/UserDetails.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/users',
     name: 'Users',
     component: Users
   },
@@ -20,7 +21,13 @@ const routes = [
   {
     path: '/user-details',
     name: 'UserDetails',
-    component: UserDetails
+    component: UserDetails,
+    props:true
+  },
+  {
+    path: '/',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/about',
