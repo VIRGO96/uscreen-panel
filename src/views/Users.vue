@@ -95,73 +95,72 @@
         <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button>
       </div>
       <div>
-        <b-table striped hover :responsive="true" :fields="fields" :items="items"        
+        <b-table striped hover :responsive="true" :fields="fields" :items="active_user=='Employers' ? employer:users"        
           :current-page="currentPage"
           :per-page="perPage">
-            <template v-slot:head(user_id)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(UserKey)="data">
+              <span class="ex-smalls">ID</span>
             </template>
-            <template v-slot:head(name)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(UserName)="data">
+              <span class="ex-smalls">Name</span>
             </template>
-            <template v-slot:head(company_name)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(CompanyName)="data">
+              <span class="ex-smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(email)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(Email)="data">
+              <span class="ex-smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(currency)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(CurrencyCode)="data">
+              <span class="ex-smalls">Currency</span>
             </template>
-            <template v-slot:head(wallet)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(UserWalletAmount)="data">
+              <span class="ex-smalls">Wallet</span>
             </template>
-            <template v-slot:head(email_vertification)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(IsVerified)="data">
+              <span class="ex-smalls">Email Verification</span>
             </template>
-            <template v-slot:head(phone_no)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(MobileNumber)="data">
+              <span class="ex-smalls">Phone No	</span>
             </template>
-            <template v-slot:head(signup_date)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(LastCreated)="data">
+              <span class="ex-smalls">Signup Date</span>
             </template>
-            <template v-slot:head(status)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(StatusName)="data">
+              <span class="ex-smalls">Status</span>
             </template>
             <!-- Cells -->
-            <template v-slot:cell(user_id)="data">
-                <span class="smalls">{{data.item.user_id}} </span> 
+            <template v-slot:cell(UserKey)="data">
+                <span class="smalls">{{data.item.UserKey}} </span> 
             </template>
-            <template v-slot:cell(name)="data">
-              <span class="smalls">{{ data.item.name }}</span>
+            <template v-slot:cell(UserName)="data">
+              <span class="smalls">{{ data.item.UserName }}</span>
             </template>
-            <template v-slot:cell(company_name)="data">
-              <span class="smalls">{{ data.item.company_name }}</span>
+            <template v-slot:cell(CompanyName)="data">
+              <span class="smalls">{{ data.item.CompanyName }}</span>
             </template>
-            <template v-slot:cell(email)="data">
-              <span class="smalls">{{ data.item.email }}</span>
+            <template v-slot:cell(Email)="data">
+              <span class="smalls">{{ data.item.Email }}</span>
             </template>
-            <template v-slot:cell(currency)="data">
-              <span class="smalls">{{ data.item.currency }}</span>
+            <template v-slot:cell(CurrencyCode)="data">
+              <span class="smalls">{{ data.item.CurrencyCode }}</span>
             </template>
-            <template v-slot:cell(wallet)="data">
-              <span class="smalls">{{ data.item.wallet }}</span>
+            <template v-slot:cell(UserWalletAmount)="data">
+              <span class="smalls">{{ data.item.UserWalletAmount }}</span>
             </template>
-            <template v-slot:cell(email_vertification)="data">
-              <span :class="[data.item.email_vertification=='yes' ? 'text-success':'text-danger', 'smalls']">{{ data.item.email_vertification }}</span>
+            <template v-slot:cell(IsVerified)="data">
+              <span :class="[data.item.IsVerified==1 ? 'text-success':'text-danger', 'smalls']">{{ data.item.IsVerified==1 ? 'yes':'pending'}}</span>
             </template>
-            <template v-slot:cell(phone_no)="data">
-              <span class="smalls">{{ data.item.phone_no }}</span>
+            <template v-slot:cell(MobileNumber)="data">
+              <span class="smalls">{{ data.item.MobileNumber }}</span>
             </template>
-            <template v-slot:cell(signup_date)="data">
-              <span class="smalls">{{ data.item.signup_date }}</span>
+            <template v-slot:cell(LastCreated)="data">
+              <span class="smalls">{{ data.item.LastCreated.split('T')[0] }}</span>
             </template>
-            <template v-slot:cell(status)="data">
-              <!-- <div class="bg-success rounded p-1 text-white">{{ data.item.status }}</div> -->
-              <!-- <b-badge  style="" pill>{{ data.item.status }}</b-badge> -->
-              <b-badge :class="data.item.status=='Enabled' ? '':'bg-white'" :style="data.item.status=='Enabled' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
-              <router-link to="/user-details">
-                <span class="float-right ml-2 fa fa-eye text-primary"></span>
+            <template v-slot:cell(StatusName)="data">
+                    <b-badge :class="data.item.StatusName=='Active' ? '':'bg-white'" :style="data.item.StatusName=='Active' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`"  pill>{{ data.item.StatusName }}</b-badge>
+           <router-link :to="{name:'UserDetails',params:{UserKey:data.item.UserKey}}">
+                <!-- float-right ml-2  -->
+                <span class="fa fa-eye text-primary"></span>
               </router-link>
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -188,41 +187,46 @@
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 import SecondaryHeader from '@/components/SecondaryHeader.vue'
-
+import { RepositoryFactory } from '../Repository/RepositoryFactory'
+const UserRepository = RepositoryFactory.get('user_repository')
+import {mapGetters} from 'vuex'
 export default {
     name: 'Users',
     components: {
         Header,
         SecondaryHeader
     },
+    computed:{
+      ...mapGetters(['employer','users'])
+    },
     created(){
-      this.totalRows = this.items.length
+      this.totalRows = this.active_user=='Employers' ? this.employer.length:this.users.length
+      this.fetchUsers()
 
+    },
+    methods:{
+        async fetchUsers(){
+        let {data}=await UserRepository.getusers()
+        console.log(data)
+        this.$store.commit("setAllUsers",data.PageData)
+        }
     },
     data() {
         return {
           active_user:'Employers',
-           items: [
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Disabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'pending',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Disabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-
-          ],
+          
          fields: [
           // A regular column
-          'user_id',
-          'name',
-          'company_name',
-          'email',
-          'currency',
-          'wallet',
-          'email_vertification',
-          'phone_no',
-          'signup_date',
-          'status'
+          'UserKey',
+          'UserName',
+          'CompanyName',
+          'Email',
+          'CurrencyCode',
+          'UserWalletAmount',
+          'IsVerified',
+          'MobileNumber',
+          'LastCreated',
+          'StatusName'
 
         ],
           totalRows: 1,
