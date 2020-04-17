@@ -10,7 +10,7 @@
       <b-row class="mt-2">
         <b-col>
              <b-input-group  class="mt-3">
-                <b-form-input v-model="text" placeholder="Username"></b-form-input>
+                <b-form-input v-model="login.Email"  placeholder="Username"></b-form-input>
                 <b-input-group-append>
                     <b-button variant="light" style="border-top:1px solid #dcdcdc;border-bottom:1px solid #dcdcdc;border-right:1px solid #dcdcdc"><span class="fa fa-user"></span></b-button>
                     
@@ -22,7 +22,7 @@
       <b-row class="mt-2">
         <b-col>
             <b-input-group  class="mt-3">
-                <b-form-input v-model="text" placeholder="Password"></b-form-input>
+                <b-form-input v-model="login.password" type="password" placeholder="Password"></b-form-input>
                 <b-input-group-append>
                     <b-button variant="light" style="border-top:1px solid #dcdcdc;border-bottom:1px solid #dcdcdc;border-right:1px solid #dcdcdc"><span class="fa fa-lock"></span></b-button>
                     
@@ -33,7 +33,7 @@
       </b-row>
        <b-row class="mt-2">
         <b-col>
-            <b-button variant="primary" pill class="pr-4 pl-4">Sign In</b-button>
+            <b-button variant="primary" pill class="pr-4 pl-4" @click="validate_auth()">Sign In</b-button>
         </b-col>
         
       </b-row>
@@ -42,124 +42,50 @@
 </template>
 
 <script>
+// import {RepositoryFactory} from '../Repository/RepositoryFactory'
+// const UsersRepository = RepositoryFactory.get('user_repository')
+
+import { RepositoryFactory } from '../Repository/RepositoryFactory'
+const UserRepository = RepositoryFactory.get('user_repository')
+
 export default {
   name: 'SecondaryHeader',
-  props: {
-    msg: String
-  },
-  data(){
-    return {
-      series: [{
-                data: [10, 10, 20, 20, 20, 20, 30, 50, 70, 50, 69, 20, 30, 40, 50, 58, 20, 30, 40, 50, 40]
-            }],
-            secchartOptions: {
-                chart: {
-                    type: 'bar',
-                    height: 150,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                colors: ['#349dfa'],
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        startingShape: 'flat',
-                        endingShape: 'flat',
-                        columnWidth: '30%',
-                        barHeight: '100%',
-                        distributed: false,
+    data() {
+        return {
+          login:{
+          // phoneno: '',
+          // password:''
+          // phoneno: '03235400786',
+          // password:'12345678'
+          Email: 'admin@fadv.com',
+          password:'admin123456'
+        }
+      }
+    },
+    methods:{
+      async validate_auth() {
+        if(this.login.Email!='' && this.login.password!='') {
+          var {data}= await UserRepository.authenticatelogin(this.login)
+          console.log(data)
+          if(data.Token!=null) {
+              console.log("yeh")
+          this.$store.commit("setLoggedUser",data)
+          }
+          else{
+              console.log("yehs")
 
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                grid: {
-                    show: false,
+          }
+          // else {
+          // this.$store.commit('setNotifications',{message:'Make sure to provide valid credentials',type:'error'})
+          // }
 
-                    xaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-                    yaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-
-                },
-                xaxis: {
-
-                    labels: {
-                        show: false
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    categories: [],
-                },
-                yaxis: {
-                    show: false
-                }
-            },
-            chartOptions: {
-                chart: {
-                    type: 'bar',
-                    height: 150,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                grid: {
-                    show: false,
-
-                    xaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-                    yaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-
-                },
-                colors: ['#817cd7'],
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        startingShape: 'flat',
-                        endingShape: 'flat',
-                        columnWidth: '30%',
-                        barHeight: '100%',
-                        distributed: false,
-
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                xaxis: {
-
-                    labels: {
-                        show: false
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    categories: [],
-                },
-                yaxis: {
-                    show: false
-                }
-            }
-
-
+        }
+        else {
+          this.$store.commit('setNotifications',{message:'Make sure to fill in the fields',type:'error'})
+        }
+        
+      },
     }
-  }
 }
 </script>
 
