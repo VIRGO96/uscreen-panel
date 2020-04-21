@@ -1,15 +1,40 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view/>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import nativeToast from 'native-toast'
+import { RepositoryFactory } from './Repository/RepositoryFactory'
+const OrderRepository = RepositoryFactory.get('order_repository')
+
+
 export default {
+  computed:{
+    ...mapGetters(['notifications','loggedUser'])
+  },
+  created(){
+
+      console.log(localStorage.getItem("loggedUser"))
+      if(localStorage.getItem("loggedUser")!=null){
+        console.log("yahs")
+        this.$store.commit("setLoggedUser",JSON.parse(localStorage.getItem("loggedUser")))
+        this.fetchOrders()
+
+      }
+      else{
+        console.log("mahh")
+      }
+  },
+  methods:{
+    async fetchOrders(){
+        let {data}=await OrderRepository.getorders()
+        console.log(data)
+        this.$store.commit("setAllOrders",data.data.PageData)
+      }
+  },
   watch:{
     '$route.name': {
         handler: function(route)  {
@@ -18,8 +43,33 @@ export default {
         },
         deep: true,
         immediate: true
+    },
+   
+    loggedUser() {
+      console.log("yehhh")
+      if(this.loggedUser!=null) {
+        this.$router.push({path:'/users'})
+         
+      }
+      else{
+        this.$router.push({path:'/'})
+        // location.reload();
+
+      }
+    },
+    notifications(){
+      if(this.notifications.message!=null) {
+        nativeToast({
+          message: this.notifications.message,
+          position: 'north-east',
+          timeout: 5000,
+          type: this.notifications.type
+          })
+      }
     }
+  
   }
+  
 }
 </script>
 
@@ -41,6 +91,9 @@ export default {
   margin-top:-50px;
 }
 .smalls{
+  font-size:14px;
+}
+.ex-smalls{
   font-size:14px;
 }
 .self-center{
