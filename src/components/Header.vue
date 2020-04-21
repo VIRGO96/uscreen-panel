@@ -17,7 +17,7 @@
        <div class="mt-2">
          <b-row>
             <b-col md="1" cols="12" class="text-md-left pr-md-0 ">
-              <router-link to="/">
+              <router-link to="/users">
                <span :class="active_route=='Users' ? 'text-orange': 'text-gray'">Users</span>
               </router-link>
             </b-col>
@@ -25,6 +25,11 @@
                <router-link to="/orders">
                  <span :class="active_route=='Orders' ? 'text-orange': 'text-gray'">Orders</span> 
                </router-link>
+            </b-col>
+            <b-col  md="10" cols="12" style="cursor:pointer;" class="text-md-right pl-md-0 ">
+               <!-- <router-link to="/orders"> -->
+                 <span :class="'text-gray'" @click="logOut">Logout</span> 
+               <!-- </router-link> -->
             </b-col>
          </b-row>
        </div>
@@ -39,6 +44,11 @@ export default {
   name: 'Header',
   computed:{
     ...mapGetters(['active_route'])
+  },
+  methods:{
+    logOut(){
+       this.$store.commit("logout")
+    }
   }
 }
 </script>
