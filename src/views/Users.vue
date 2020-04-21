@@ -101,7 +101,7 @@
         <!-- <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button> -->
       </div>
       <div>
-        <b-table striped hover :responsive="true" :fields="fields" :items="active_user=='Employers' ? filtered_employers:users"        
+        <b-table striped hover :responsive="true" :fields="fields" :items="active_user=='Employers' ? filtered_employers:filtered_users"        
           :current-page="currentPage"
           :per-page="perPage"
           @filtered="onFiltered">
@@ -166,8 +166,8 @@
             <template v-slot:cell(StatusName)="data">
                     <b-badge :class="data.item.StatusName=='Active' ? '':'bg-white'" :style="data.item.StatusName=='Active' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`"  pill>{{ data.item.StatusName }}</b-badge>
            <router-link :to="{name:'UserDetails',params:{UserKey:data.item.UserKey}}">
-                <!--   -->
-                <span class="float-right ml-2 fa fa-eye text-primary"></span>
+                <!-- float-right ml-2   -->
+                <span class="fa fa-eye text-primary"></span>
               </router-link>
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -216,27 +216,53 @@ export default {
     },
     computed:{
       ...mapGetters(['employer','users','allusers']),
-      filtered_employers(){
+      filtered_users(){
         if(this.email_filter==''){
-        return this.employer.filter(item=>
-        item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-        item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-        item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-        item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-        item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()) )
+          console.log('yoo')
+            return this.users.filter(item=>
+            item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) )
 
-        }
-        else{
-          const result=this.employer.filter(item=>item.IsVerified==1)
-          
-          return result.filter( item=>
-          item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-          item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase())  ||
-          item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-          item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-          item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()))
+          }
+          else{
+            const result=this.users.filter(item=>item.IsVerified==1)
+            
+            return result.filter( item=>
+            item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase())  ||
+            item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()))
 
-        }
+          }
+
+      },
+      filtered_employers(){
+          if(this.email_filter==''){
+            return this.employer.filter(item=>
+            item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()) )
+
+          }
+          else{
+            const result=this.employer.filter(item=>item.IsVerified==1)
+            
+            return result.filter( item=>
+            item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase())  ||
+            item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+            item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()))
+
+          }
+
+
+
       }
 
     },
