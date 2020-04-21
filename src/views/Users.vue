@@ -74,7 +74,7 @@
          <b-row class="mt-2">
            <b-col md="6" class="text-md-left">
              <div class="d-block d-md-flex">
-                <b-form-checkbox class="mt-xs-1" style="align-self:center;">
+                <b-form-checkbox class="mt-xs-1" v-model="email_filter" style="align-self:center;">
                 Email Verified
               </b-form-checkbox>
               
@@ -88,17 +88,24 @@
         Search
         </div>
         <div class="ml-3">
-        <input class=" border-hids form-control col-md-12">
+        <input v-model="search_filter" class=" border-hids form-control col-md-12">
         </div>
       </div>
        <div class="mt-2 mb-2 text-md-right">
-        <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button>
+         <download-csv
+          class   = "btn btn-primary"
+          :data   = "allusers"
+          name    = "filename.csv">      
+          Excel
+          </download-csv>
+        <!-- <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button> -->
       </div>
       <div>
-        <b-table striped hover :responsive="true" :fields="fields" :items="active_user=='Employers' ? employer:users"        
+        <b-table striped hover :responsive="true" :fields="fields" :items="active_user=='Employers' ? filtered_employers:users"        
           :current-page="currentPage"
-          :per-page="perPage">
-            <template v-slot:head(UserKey)="data">
+          :per-page="perPage"
+          @filtered="onFiltered">
+            <template v-slot:head(UserId)="data">
               <span class="ex-smalls">ID</span>
             </template>
             <template v-slot:head(UserName)="data">
@@ -129,8 +136,8 @@
               <span class="ex-smalls">Status</span>
             </template>
             <!-- Cells -->
-            <template v-slot:cell(UserKey)="data">
-                <span class="smalls">{{data.item.UserKey}} </span> 
+            <template v-slot:cell(UserId)="data">
+                <span class="smalls">{{data.item.UserId}} </span> 
             </template>
             <template v-slot:cell(UserName)="data">
               <span class="smalls">{{ data.item.UserName }}</span>
@@ -159,8 +166,8 @@
             <template v-slot:cell(StatusName)="data">
                     <b-badge :class="data.item.StatusName=='Active' ? '':'bg-white'" :style="data.item.StatusName=='Active' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`"  pill>{{ data.item.StatusName }}</b-badge>
            <router-link :to="{name:'UserDetails',params:{UserKey:data.item.UserKey}}">
-                <!-- float-right ml-2  -->
-                <span class="fa fa-eye text-primary"></span>
+                <!--   -->
+                <span class="float-right ml-2 fa fa-eye text-primary"></span>
               </router-link>
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -196,28 +203,66 @@ export default {
         Header,
         SecondaryHeader
     },
+    watch:{
+      employer(){
+            this.totalRows = this.active_user=='Employers' ? this.employer.length:this.users.length
+
+      },
+      users(){
+            this.totalRows = this.active_user=='Employers' ? this.employer.length:this.users.length
+
+      }
+
+    },
     computed:{
-      ...mapGetters(['employer','users'])
+      ...mapGetters(['employer','users','allusers']),
+      filtered_employers(){
+        if(this.email_filter==''){
+        return this.employer.filter(item=>
+        item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+        item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+        item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+        item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+        item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()) )
+
+        }
+        else{
+          const result=this.employer.filter(item=>item.IsVerified==1)
+          
+          return result.filter( item=>
+          item.LastName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+          item.FirstName.toLowerCase().includes(this.search_filter.toLowerCase())  ||
+          item.Email.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+          item.UserName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+          item.CompanyName.toLowerCase().includes(this.search_filter.toLowerCase()))
+
+        }
+      }
+
     },
     created(){
-      this.totalRows = this.active_user=='Employers' ? this.employer.length:this.users.length
       this.fetchUsers()
 
     },
     methods:{
+        onFiltered(filteredItems) {
+          this.totalRows = filteredItems.length
+          this.currentPage = 1
+        },
         async fetchUsers(){
         let {data}=await UserRepository.getusers()
         console.log(data)
-        this.$store.commit("setAllUsers",data.PageData)
+        this.$store.commit("setAllUsers",data.data.PageData)
         }
     },
     data() {
         return {
           active_user:'Employers',
-          
+          email_filter:0,
+          search_filter:'',
          fields: [
           // A regular column
-          'UserKey',
+          'UserId',
           'UserName',
           'CompanyName',
           'Email',
