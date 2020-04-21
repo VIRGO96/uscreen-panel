@@ -22,7 +22,7 @@
 
            </b-col>
         </b-row>
-        <b-row class="mt-2">
+        <!-- <b-row class="mt-2">
            <b-col md="8" cols="12" class="text-md-left">
              <div class="d-block d-md-flex">
                 <b-form-checkbox class="mt-xs-1 self-center">
@@ -38,7 +38,7 @@
              </div>
 
            </b-col>
-        </b-row>
+        </b-row> -->
         <b-row class="mt-2">
            <b-col cols="12" md="8" class="text-md-left">
              <div class="d-block d-md-flex">
@@ -88,9 +88,12 @@
             <b-form-checkbox class="self-center">
               </b-form-checkbox>
               <div style="width:145px;" class="self-center">Status</div>
-              <select name="" placeholder="Select Status" class="form-control" id="">
-                <option value="Company A">status A</option>
-                <option value="Company B">status B</option>
+              <select name="" v-model="status_filter" placeholder="Select Status" class="form-control" id="">
+                <option value="">All</option>
+                <option value="Paid">Paid</option>
+                <option value="Ready">Ready</option>
+                <option value="Expired">Expired</option>
+
               </select>
              </div>
 
@@ -101,8 +104,8 @@
                 Status
               </b-form-checkbox>
               <select name="" placeholder="Select Status" class="mt-xs-1 form-control" id="">
-                    <option value="Company A">status A</option>
-                <option value="Company B">status B</option>
+                    <option value="Paid A">status A</option>
+                <option value="Paid B">status B</option>
                 </select>
               </div>
 
@@ -114,81 +117,90 @@
         Search
         </div>
         <div class="ml-3">
-        <input class=" border-hids form-control col-md-12">
+        <input v-model="search_filter" class=" border-hids form-control col-md-12">
         </div>
       </div>
        <div class="mt-2 mb-2 text-md-right">
-        <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button>
+        <!-- <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button> -->
+        <download-csv
+          class   = "btn btn-primary"
+          :data   = "allorders"
+          name    = "orders.csv">      
+          Excel
+          </download-csv>
       </div>
       <div>
-        <b-table :responsive="true"  striped hover :fields="fields" :items="items"        
+        <b-table :responsive="true"  striped hover :fields="fields" :items="filtered_orders"        
           :current-page="currentPage"
           :per-page="perPage">
-            <template v-slot:head(order_id)="data">
+            <template v-slot:head(OrderId)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(package_name)="data">
+            <template v-slot:head(PackageServiceName)="data">
+              <span class="smalls">Package Name</span>
+            </template>
+            <template v-slot:head(Candidate)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(candidate_name)="data">
+            <template v-slot:head(UserId)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(user_id)="data">
+            <template v-slot:head(CurrencyCode)="data">
+              <span class="smalls">Currency</span>
+            </template>
+            <template v-slot:head(TotalAmount)="data">
+              <span class="smalls">Prices</span>
+            </template>
+            <template v-slot:head(PaymentTypeName)="data">
+              <span class="smalls">Payment Type</span>
+            </template>
+            <template v-slot:head(PaymentDate)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(currency)="data">
-              <span class="smalls">{{ data.label }}</span>
-            </template>
-            <template v-slot:head(price)="data">
-              <span class="smalls">{{ data.label }}</span>
-            </template>
-            <template v-slot:head(payment_type)="data">
-              <span class="smalls">{{ data.label }}</span>
-            </template>
-            <template v-slot:head(payment_completion)="data">
-              <span class="smalls">{{ data.label }}</span>
-            </template>
-            <template v-slot:head(order_date)="data">
+            <template v-slot:head(LastCreated)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
             <template v-slot:head(status)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
             <!-- Cells -->
-            <template v-slot:cell(order_id)="data">
-                <span class="smalls">{{data.item.order_id}} </span> 
+            <template v-slot:cell(OrderId)="data">
+                <span class="smalls">{{data.item.OrderId}} </span> 
             </template>
-            <template v-slot:cell(package_name)="data">
-              <span class="smalls">{{ data.item.package_name }}</span>
+            <template v-slot:cell(PackageServiceName)="data">
+              <span class="smalls">{{ data.item.PackageServiceName }}</span>
             </template>
-            <template v-slot:cell(candidate_name)="data">
-              <span class="smalls">{{ data.item.candidate_name }}</span>
+            <template v-slot:cell(Candidate)="data">
+              <span class="smalls">{{ data.item.Candidate.FirstName }} {{data.item.Candidate.LastName}}</span>
             </template>
-            <template v-slot:cell(user_id)="data">
-              <span class="smalls">{{ data.item.user_id }}</span>
+            <template v-slot:cell(UserId)="data">
+              <span class="smalls">{{ data.item.UserId }}</span>
             </template>
-            <template v-slot:cell(currency)="data">
-              <span class="smalls">{{ data.item.currency }}</span>
+            <template v-slot:cell(CurrencyCode)="data">
+              <span class="smalls">{{ data.item.CurrencyCode }}</span>
             </template>
-            <template v-slot:cell(price)="data">
-              <span class="smalls">{{ data.item.price }}</span>
+            <template v-slot:cell(TotalAmount)="data">
+              <span class="smalls">{{ data.item.TotalAmount }}</span>
             </template>
-            <template v-slot:cell(payment_type)="data">
-              <span class="smalls">{{ data.item.payment_type }}</span>
+            <template v-slot:cell(PaymentTypeName)="data">
+              <span class="smalls">{{ data.item.PaymentTypeName }}</span>
             </template>
-            <template v-slot:cell(payment_completion)="data">
-              <span class="smalls">{{ data.item.payment_completion }}</span>
+            <template v-slot:cell(PaymentDate)="data">
+              <span class="smalls">{{ data.item.PaymentDate!=null ? data.item.PaymentDate.split('T')[0]:'' }}</span>
             </template>
-            <template v-slot:cell(order_date)="data">
-              <span class="smalls">{{ data.item.order_date }}</span>
+            <template v-slot:cell(LastCreated)="data">
+              <span class="smalls">{{ data.item.LastCreated.split('T')[0] }}</span>
             </template>
             <template v-slot:cell(status)="data">
               <!-- <div class="bg-success rounded p-1 text-white">{{ data.item.status }}</div> -->
               <!-- <b-badge  style="" pill>{{ data.item.status }}</b-badge> -->
-              <b-badge v-if="data.item.status=='done'" :class="data.item.status=='done' ? '':'bg-white'" :style="data.item.status=='done' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{ data.item.status }}</b-badge>
-              <b-badge v-else-if="data.item.status=='cancelled'" class="bg-white"  style="background-color:#0071ce;color:#0071ce;border:1px solid #0071ce" pill>{{ data.item.status }}</b-badge>
-              <b-badge  v-b-modal.actions v-else-if="data.item.status=='pending'" class="text-orange bg-white" style="cursor:pointer;border:1px solid #d87128;" pill>{{ data.item.status }}</b-badge>
-              <span  class="float-right ml-2 fa fa-eye text-primary"></span>
+              <b-badge @click="viewAction(data.item)" v-if="data.item.OrderStatusName=='Paid'" :class="data.item.OrderStatusName=='Paid' ? '':'bg-white'" :style="data.item.OrderStatusName=='Paid' ? `background-color:#90d940`:`border:1px solid #90d940;color:#90d940`" pill>{{data.item.OrderStatusName}}</b-badge>
+              <b-badge  @click="viewAction(data.item)" v-else class="bg-white"  style="background-color:#0071ce;color:#0071ce;border:1px solid #0071ce" pill>{{data.item.OrderStatusName}}</b-badge>
+             <!-- v-else-if="data.item.OrderStatusName=='Ready'" -->
+              <!-- <b-badge  @click="viewAction(data.item)" v-else-if="data.item.OrderStatusName=='Refund'" class="bg-white"  style="background-color:#0071ce;color:#0071ce;border:1px solid #0071ce" pill>Refund</b-badge> -->
+
+              <!-- <b-badge  v-b-modal.actions v-else-if="data.item.status=='pending'" class="text-orange bg-white" style="cursor:pointer;border:1px solid #d87128;" pill>{{ data.item.status }}</b-badge> -->
+              <!-- <span  class="float-right ml-2 fa fa-eye text-primary"></span> -->
 
               <!-- <b-button class="p-1" :variant="data.item.status=='Enabled' ? 'success':'outline-success'" size="sm" pill></b-button> -->
             </template>
@@ -235,7 +247,7 @@
       <p class="text-muted">Upon cancellation , an email will be sent  to the user to advice that order has been cancelled.</p>
       <b-row class="mt-3 pt-4 pb-3">
            <b-col class="text-right" >
-             <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
+             <b-button pill variant="primary" class="pr-4 pl-4" @click="cancelOrder('CANCELLED')"> Confirm</b-button>
            </b-col>
            <b-col  class="text-main">
              <b-button pill variant="light" class="pr-4 pl-4" @click="$bvModal.hide('order-cancel')" style="border:1px solid #dcdcdc"> Cancel</b-button>
@@ -252,7 +264,7 @@
              <h6><b>Transaction ID</b> </h6>
            </b-col>
            <b-col  class="text-main">
-          <input placeholder="Transaction ID" class="rounded form-control col-md-12">
+          <input v-model="confirm_settlement_obj.PaymentReference" placeholder="Transaction ID" class="rounded form-control col-md-12">
            </b-col>
       </b-row>
       <b-row class="mt-1">
@@ -260,7 +272,7 @@
              <h6><b>Re-enter Transaction ID</b> </h6>
            </b-col>
            <b-col  class="text-main">
-          <input placeholder="Enter Order ID" class="rounded form-control col-md-12">
+          <input v-model="confirm_settlement_obj.PaymentReference" placeholder="Enter Order ID" class="rounded form-control col-md-12">
            </b-col>
       </b-row>
       <b-row class="mt-1">
@@ -268,7 +280,9 @@
              <h6><b>Payment Date</b> </h6>
            </b-col>
            <b-col  class="text-main">
-              <b-form-datepicker style="border-radius:1rem;" ></b-form-datepicker>
+              <input v-model="confirm_settlement_obj.PaymentDate" style="border-radius:1rem;"  type="date" class="form-control"/>
+
+              <!-- <b-form-datepicker v-model="confirm_settlement_obj.PaymentDate" style="border-radius:1rem;" ></b-form-datepicker> -->
            </b-col>
       </b-row>
       <b-row class="mt-1">
@@ -276,12 +290,13 @@
              <h6><b>Order ID</b> </h6>
            </b-col>
            <b-col  class="text-main">
-          <input placeholder="Enter Order ID" class="rounded form-control col-md-12">
+          <input placeholder="Enter Order ID" v-model="confirm_settlement_obj.OrderId" class="rounded form-control col-md-12">
            </b-col>
       </b-row>
        <b-row class="mt-3">
            <b-col class="text-right" >
-             <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
+            <b-spinner v-if="isLoad" variant="primary" label="Spinning"></b-spinner>
+             <b-button v-else pill variant="primary" class="pr-4 pl-4" @click="confirmSettlement()"> Confirm</b-button>
            </b-col>
            <b-col  class="text-main">
              <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc" @click="$bvModal.hide('order-confirm')"> Cancel</b-button>
@@ -297,42 +312,136 @@
 import Header from '@/components/Header.vue'
 import SecondaryHeader from '@/components/SecondaryHeader.vue'
 
+import { RepositoryFactory } from '../Repository/RepositoryFactory'
+const UserRepository = RepositoryFactory.get('user_repository')
+const OrderRepository = RepositoryFactory.get('order_repository')
+import {mapGetters} from 'vuex'
 export default {
-    name: 'Home',
+    name: 'Orders',
     components: {
         Header,
         SecondaryHeader
     },
-    created(){
-      this.totalRows = this.items.length
+    watch:{
+      allorders(){
+          this.totalRows = this.allorders.length
 
+      }
+    },
+    computed:{
+      ...mapGetters(['allorders','allusers']),
+      filtered_orders(){
+        if(this.status_filter!=''){
+          const filtered=this.allorders.filter(item=>item.OrderStatusName==this.status_filter)
+          return filtered.filter(item=>item.PackageServiceName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+          item.Candidate.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+          item.Candidate.LastName.toLowerCase().includes(this.search_filter.toLowerCase()))
+
+        }
+        else{
+        // return this.allorders.filter(item=>item.PackageServiceName.toLowerCase().includes(this.search_filter.toLowerCase()))
+          return this.allorders.filter(item=>
+          item.Candidate.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
+          item.Candidate.LastName.toLowerCase().includes(this.search_filter.toLowerCase()))
+
+
+        }
+         
+      }
+    },
+    created(){
+      this.totalRows = this.allorders.length
+      this.fetchOrders()
+
+
+    },
+    methods:{
+      async confirmSettlement() {
+        this.confirm_settlement_obj.OrderKey=this.order_obj.OrderKey
+        let obj=this.allorders.find(item=>item.OrderId==this.confirm_settlement_obj.OrderId)
+        if(obj!=null) {
+          this.isLoad=true
+          this.confirm_settlement_obj.OrderKey=obj.OrderKey
+          this.confirm_settlement_obj.UserKey=obj.UserKey
+          let {data}= await OrderRepository.edit_order(this.confirm_settlement_obj)
+          if(data.status=='Success'){
+            this.$bvModal.hide('order-confirm')
+            this.fetchOrders()
+            this.$store.commit('setNotifications',{message:'Order confirmed successfully',type:'success'})
+          }
+          else{
+            this.$store.commit('setNotifications',{message:'Order not confirmed',type:'error'})
+          }
+          this.isLoad=false
+
+          
+
+        }
+        else {
+          this.$store.commit('setNotifications',{message:'Order not found',type:'error'})
+
+        }
+
+      },
+      viewAction(item){
+        this.order_obj.OrderKey=item.OrderKey
+        this.order_obj.UserKey=item.UserKey
+        this.$bvModal.show('actions')
+      },
+      async cancelOrder(type){
+        this.order_obj.Type=type
+        let {data}=await OrderRepository.edit_order(this.order_obj)
+        
+        if(data.status=='Success'){
+          this.$bvModal.hide('order-cancel')
+          this.fetchOrders()
+        this.$store.commit('setNotifications',{message:'Order cancelled successfully',type:'success'})
+
+        }
+        else{
+        this.$store.commit('setNotifications',{message:'Order not cancelled',type:'error'})
+
+        }
+
+      },
+      async fetchOrders(){
+        let {data}=await OrderRepository.getorders()
+        this.$store.commit("setAllOrders",data.data.PageData)
+      }
     },
     data() {
         return {
-           items: [
-            { order_id: 40, package_name: 'Employed Credit', candidate_name: 'Peter',user_id:'41',currency:'USD',price:'$434',payment_type:'Online',payment_completion:'17/19/2019',order_date:'8-11-2019 13:59',status:'pending' },
-            { order_id: 40, package_name: 'Employed Credit', candidate_name: 'Peter',user_id:'41',currency:'USD',price:'$434',payment_type:'Online',payment_completion:'17/19/2019',order_date:'8-11-2019 13:59',status:'done' },
-            { order_id: 40, package_name: 'Employed Credit', candidate_name: 'Peter',user_id:'41',currency:'USD',price:'$434',payment_type:'Online',payment_completion:'17/19/2019',order_date:'8-11-2019 13:59',status:'done' },
-            { order_id: 40, package_name: 'Employed Credit', candidate_name: 'Peter',user_id:'41',currency:'USD',price:'$434',payment_type:'Online',payment_completion:'17/19/2019',order_date:'8-11-2019 13:59',status:'cancelled' },
-            { order_id: 40, package_name: 'Employed Credit', candidate_name: 'Peter',user_id:'41',currency:'USD',price:'$434',payment_type:'Online',payment_completion:'17/19/2019',order_date:'8-11-2019 13:59',status:'cancelled' },
-            { order_id: 40, package_name: 'Employed Credit', candidate_name: 'Peter',user_id:'41',currency:'USD',price:'$434',payment_type:'Online',payment_completion:'17/19/2019',order_date:'8-11-2019 13:59',status:'cancelled' },
-
-          ],
+          isLoad:false,
+          search_filter:'',
+          status_filter:'',
+          confirm_settlement_obj:{
+            OrderId:'',
+            PaymentReference:'',
+            PaymentDate:'',
+            OrderKey:'',
+            UserKey:'',
+            Type:'INVOICE' 
+          },
+          order_obj:{
+           Type: '',
+           OrderKey:'',
+           UserKey:'',
+          },
          fields: [
           // A regular column
-          'order_id',
-          'package_name',
-          'candidate_name',
-          'user_id',
-          'currency',
-          'price',
-          'order_date',
-          'payment_completion',
-          'payment_type',
+          'OrderId',
+          'PackageServiceName',
+          'Candidate',
+          'UserId',
+          'CurrencyCode',
+          'TotalAmount',
+          'LastCreated',
+          'PaymentDate',
+          'PaymentTypeName',
           'status',
 
         ],
-          totalRows: 1,
+        totalRows: 1,
         currentPage: 1,
         perPage: 5,
             
