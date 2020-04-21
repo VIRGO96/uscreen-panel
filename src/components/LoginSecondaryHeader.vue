@@ -67,9 +67,9 @@ export default {
         if(this.login.Email!='' && this.login.password!='') {
           var {data}= await UserRepository.authenticatelogin(this.login)
           console.log(data)
-          if(data.Token!=null) {
+          if(data.data.Token!=null) {
               console.log("yeh")
-          this.$store.commit("setLoggedUser",data)
+          this.$store.commit("setLoggedUser",data.data)
           }
           else{
               console.log("yehs")
