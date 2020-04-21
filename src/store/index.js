@@ -2,8 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
+import users from './modules/users';
+import orders from './modules/orders';
 
 export default new Vuex.Store({
+
+  
   state: {
     active_route:'Users'
   },
@@ -19,5 +23,7 @@ export default new Vuex.Store({
     
   },
   modules: {
+    users,
+    orders
   }
 })
