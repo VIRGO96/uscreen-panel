@@ -53,36 +53,29 @@ export default {
     data() {
         return {
           login:{
-          // phoneno: '',
-          // password:''
-          // phoneno: '03235400786',
-          // password:'12345678'
           Email: 'admin@fadv.com',
-          password:'admin123456'
+          password:'@@admin123!@#'
         }
       }
     },
     methods:{
       async validate_auth() {
+        
         if(this.login.Email!='' && this.login.password!='') {
-          var {data}= await UserRepository.authenticatelogin(this.login)
-          console.log(data)
-          if(data.data.Token!=null) {
-              console.log("yeh")
-          this.$store.commit("setLoggedUser",data.data)
-          }
-          else{
-              console.log("yehs")
-
-          }
-          // else {
-          // this.$store.commit('setNotifications',{message:'Make sure to provide valid credentials',type:'error'})
-          // }
+          var response= await UserRepository.authenticatelogin(this.login)
+          .catch(error => {
+              console.log(error.response)
+              this.$store.commit('setNotifications',{message:error.response.data.Message,type:'error'})
+          });
+          if(response!=null) {
+            this.$store.commit("setLoggedUser",response.data.data)
+          }     
 
         }
         else {
           this.$store.commit('setNotifications',{message:'Make sure to fill in the fields',type:'error'})
         }
+      
         
       },
     }
