@@ -54,19 +54,19 @@
 
        <div class="text-left mt-3">
           <h6> <b>Registered Addess</b> </h6>
-           <p>Country: {{selected_user.UserAddress.CountryName}}</p> 
-          <p>Address: {{selected_user.UserAddress.AddressName}}</p> 
-          <p>City: {{selected_user.UserAddress.CityName}} </p> 
-          <p>State: {{selected_user.UserAddress.ProvinceName}}</p> 
+           <p>Country: {{selected_user.UserAddress!=null? selected_user.UserAddress.CountryName:''}}</p> 
+          <p>Address: {{selected_user.UserAddress!=null? selected_user.UserAddress.AddressName:''}}</p> 
+          <p>City: {{selected_user.UserAddress!=null? selected_user.UserAddress.CityName:''}} </p> 
+          <p>State: {{selected_user.UserAddress!=null? selected_user.UserAddress.ProvinceName:''}}</p> 
           <p>Postcode/Zipcode:</p> 
        </div>
 
        <div class="text-left mt-3">
           <h6> <b>Billing Address</b> </h6>
-          <p>Country: {{selected_user.BusinessAddress.CountryName}} </p> 
-          <p>Address:{{selected_user.BusinessAddress.AddressName}}</p> 
-          <p>City: {{selected_user.BusinessAddress.CityName}}</p> 
-          <p>State: {{selected_user.BusinessAddress.ProvinceName}}</p> 
+          <p>Country: {{selected_user.BusinessAddress!=null ? selected_user.BusinessAddress.CountryName:''}} </p> 
+          <p>Address:{{selected_user.BusinessAddress!=null ?selected_user.BusinessAddress.AddressName:''}}</p> 
+          <p>City: {{selected_user.BusinessAddress!=null ?selected_user.BusinessAddress.CityName:''}}</p> 
+          <p>State: {{selected_user.BusinessAddress!=null ?selected_user.BusinessAddress.ProvinceName:''}}</p> 
           <p>Postcode/Zipcode:</p> 
 
        </div>
