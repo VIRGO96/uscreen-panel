@@ -6,17 +6,17 @@
     <b-container class="card bg-white mt-2 pb-5 pt-2">
       
       <div class="mt-2 text-left text-primary">
-       <h4 >Eric Poon</h4> 
+       <h4 >{{selected_user.FirstName}} {{selected_user.LastName}}</h4> 
       </div>
       <div class="text-left mt-3">
         <div >
            <h6 > <b>Refund to Wallet</b> </h6>
         </div>
         <div class="col-md-4 pl-0">
-          <input placeholder="Enter refund amount" class=" rounded form-control col-md-12">
+          <input placeholder="Enter refund amount" v-model="refund_obj.Amount" class=" rounded form-control col-md-12">
         </div>
         <div class="col-md-4 pl-0 mt-2" style="corder-ra">
-          <input placeholder="Enter Order ID" class="rounded form-control col-md-12">
+          <input placeholder="Enter Order ID" v-model="refund_obj.OrderId" class="rounded form-control col-md-12">
         </div>
         <div class="mt-1">
           <b-button v-b-modal.modal-1 size="sm" pill variant="primary">Refund</b-button>
@@ -25,45 +25,48 @@
 
        <div class="text-left mt-4">
           <h6> <b>User Type</b> </h6>
-          <p>Employer</p>
+          <p>{{selected_user.UserRoleCode}}</p>
        </div>
 
        <div class="text-left mt-3">
           <h6> <b>Currency</b> </h6>
-          <p>AUD</p>
+          <p>{{selected_user.CurrencyCode}}</p>
        </div>
 
        <div class="text-left mt-3">
           <h6> <b>Company Information</b> </h6>
-          <p>Comapny Name:  Nexsoft Technolgy Ltd</p>
-          <p>Industry Type: : Information Technology Business</p>
-          <p>Business Registration No:</p>
+          <p>Comapny Name:  {{selected_user.CompanyName}}</p>
+          <p>Industry Type: : {{selected_user.IndustryTypeId}}</p>
+          <p>Business Registration No: {{selected_user.BusinessRegistrationNo}}</p>
 
        </div>
 
+
        <div class="text-left mt-3">
           <h6> <b>User Information</b> </h6>
-          <p>First Name: Eric</p> 
-          <p>Last Name: Poon</p> 
-          <p>Email: ericpoon@nexsoftech.com</p> 
-          <p>Mobile: +92377473833</p> 
+          <p>First Name: {{selected_user.FirstName}}</p> 
+          <p>Middle Name: {{selected_user.MiddleName}}</p> 
+          <p>Last Name: {{selected_user.LastName}}</p> 
+
+          <p>Email: {{selected_user.Email}}</p> 
+          <p>Mobile: {{selected_user.MobileCode}}-{{selected_user.MobileNumber}}</p> 
        </div>
 
        <div class="text-left mt-3">
           <h6> <b>Registered Addess</b> </h6>
-           <p>Country: Hong Kong</p> 
-          <p>Address: 1703 Lemmi Centre, 50 Hoi Yuen Road</p> 
-          <p>City:</p> 
-          <p>State:</p> 
+           <p>Country: {{selected_user.UserAddress.CountryName}}</p> 
+          <p>Address: {{selected_user.UserAddress.AddressName}}</p> 
+          <p>City: {{selected_user.UserAddress.CityName}} </p> 
+          <p>State: {{selected_user.UserAddress.ProvinceName}}</p> 
           <p>Postcode/Zipcode:</p> 
        </div>
 
        <div class="text-left mt-3">
           <h6> <b>Billing Address</b> </h6>
-          <p>Country: Hong Kong</p> 
-          <p>Address: 1703 Lemmi Centre, 50 Hoi Yuen Road</p> 
-          <p>City:</p> 
-          <p>State:</p> 
+          <p>Country: {{selected_user.BusinessAddress.CountryName}} </p> 
+          <p>Address:{{selected_user.BusinessAddress.AddressName}}</p> 
+          <p>City: {{selected_user.BusinessAddress.CityName}}</p> 
+          <p>State: {{selected_user.BusinessAddress.ProvinceName}}</p> 
           <p>Postcode/Zipcode:</p> 
 
        </div>
@@ -78,7 +81,7 @@
             <span  style="font-size:13px;"> <b>Refund amount</b> </span>  
            </b-col>
            <b-col style="font-size:20px;" class="text-main">
-            <b>$200</b> 
+            <b>${{refund_obj.Amount}}</b> 
            </b-col>
         </b-row>
         <b-row>
@@ -86,15 +89,15 @@
              <span style="font-size:13px;"> <b>Order ID</b> </span> 
            </b-col>
            <b-col style="font-size:20px;" class="text-main">
-            <b>13545</b> 
+            <b>{{refund_obj.OrderId}}</b> 
            </b-col>
         </b-row>
         <b-row class="mt-3">
            <b-col class="text-right" >
-             <b-button pill variant="primary" class="pr-4 pl-4"> Confirm</b-button>
+             <b-button pill variant="primary" class="pr-4 pl-4" @click="refundOrder()"> Confirm</b-button>
            </b-col>
            <b-col  class="text-main">
-             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc"> Cancel</b-button>
+             <b-button pill variant="light" class="pr-4 pl-4" style="border:1px solid #dcdcdc" @click="$bvModal.hide('modal-1')"> Cancel</b-button>
            </b-col>
         </b-row>
       </b-container>
@@ -106,28 +109,73 @@
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 import SecondaryHeader from '@/components/SecondaryHeader.vue'
-
+import { RepositoryFactory } from '../Repository/RepositoryFactory'
+const UserRepository = RepositoryFactory.get('user_repository')
+const OrderRepository = RepositoryFactory.get('order_repository')
+import {mapGetters} from 'vuex'
 export default {
-    name: 'Users',
+    name: 'UserDetails',
+    props:['UserKey'],
     components: {
         Header,
         SecondaryHeader
     },
+    computed:{
+      ...mapGetters(['allorders'])
+    },
     created(){
-      this.totalRows = this.items.length
+      console.log(this.UserKey)
+      this.fetchUserDetails()
+      
 
+    },
+    methods:{
+      async refundOrder() {
+        // console.log(this.refund_obj)
+        // this.$store.commit('setNotifications',{message:'Order created successfully',type:'success'})
+
+        let tempkey=this.allorders.find(item=>item.OrderId==this.refund_obj.OrderId)
+        console.log(tempkey)
+        if(tempkey!=null){
+          this.refund_obj.OrderKey=tempkey.OrderKey
+          let {data}=await OrderRepository.edit_order(this.refund_obj)
+        console.log(data)
+        if(data.status=='Success'){
+          console.log("h")
+          this.$store.commit("setNotifications",{message:'Refund completed successfully',type:'success'})
+          this.$bvModal.hide('modal-1')
+        }
+        else{
+            this.$store.commit('setNotifications',{message:'Order not refunded',type:'error'})
+
+        }
+
+      }
+      else{
+          this.$store.commit('setNotifications',{message:'Order not found',type:'error'})
+
+      }
+
+
+      },
+      async fetchUserDetails() {
+        let {data}=await UserRepository.getsingleuser(this.UserKey)
+        console.log(data)
+        this.selected_user=data.data.PageData[0]
+        this.refund_obj.UserKey=this.selected_user.UserKey
+      }
     },
     data() {
         return {
-           items: [
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Disabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'pending',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Disabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-            { user_id: 40, name: 'Rockon', company_name: 'Macdonald',email:'ronda@gmail.com',currency:'USD',wallet:'434',email_vertification:'yes',phone_no:'5484694559',signup_date:'8-11-2019 13:59',status:'Enabled' },
-
-          ],
+          selected_user:'',
+          refund_obj:{
+           Type: 'REFUND',
+           OrderId:'',
+           OrderKey:'',
+           UserKey:'',
+           Amount:''
+          },
+          
          fields: [
           // A regular column
           'user_id',
@@ -142,7 +190,6 @@ export default {
           'status'
 
         ],
-          totalRows: 1,
         currentPage: 1,
         perPage: 5,
             
