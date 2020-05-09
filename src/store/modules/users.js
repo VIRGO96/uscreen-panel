@@ -10,7 +10,7 @@ const getters = {
     notifications:state => state.notifications,
     allusers:state => state.allusers,
     users: (state) => {
-        return state.allusers.filter(item=>item.UserRoleCode=='USER')
+        return state.allusers.filter(item=>item.UserRoleCode=='INDIVIDUAL')
     },
     employer: (state) => {
         return state.allusers.filter(item=>item.UserRoleCode=='EMPLOYER')
