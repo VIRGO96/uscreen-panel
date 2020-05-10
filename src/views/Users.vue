@@ -33,7 +33,7 @@
     <b-container class="card bg-white mt-2 pb-5 pt-2">
       <div class="text-md-left">
         <b-button @click="active_user='Employers'"  pill :variant="active_user=='Employers' ? 'primary':'outline-primary'" class="pl-5 pr-5" >Employers</b-button>
-        <b-button @click="active_user='Individuals'" class="mt-xs-1 ml-md-2 pl-5 pr-5" pill :variant="active_user=='Individuals' ? 'primary':'outline-primary'" >Individuals</b-button>
+        <b-button @click="active_user='Individuals';totalRows=users.length" class="mt-xs-1 ml-md-2 pl-5 pr-5" pill :variant="active_user=='Individuals' ? 'primary':'outline-primary'" >Individuals</b-button>
       </div>
       <div class="mt-2 text-md-left text-primary">
        <h4 >Filtering</h4> 
@@ -101,10 +101,9 @@
         <!-- <b-button pill variant="primary" class="pr-4 pl-4">Excel</b-button> -->
       </div>
       <div>
-        <b-table striped hover :responsive="true" :fields="fields" :items="active_user=='Employers' ? filtered_employers:filtered_users"        
+        <b-table striped hover :responsive="true" :fields="active_user=='Employers' ? fields:individual_fields" :items="active_user=='Employers' ? employer:users"        
           :current-page="currentPage"
-          :per-page="perPage"
-          @filtered="onFiltered">
+          :per-page="perPage">
             <template v-slot:head(UserId)="data">
               <span class="ex-smalls">ID</span>
             </template>
@@ -140,7 +139,7 @@
                 <span class="smalls">{{data.item.UserId}} </span> 
             </template>
             <template v-slot:cell(UserName)="data">
-              <span class="smalls">{{ data.item.UserName }}</span>
+              <span class="smalls">{{ data.item.FirstName }} {{ data.item.LastName }}</span>
             </template>
             <template v-slot:cell(CompanyName)="data">
               <span class="smalls">{{ data.item.CompanyName }}</span>
@@ -271,10 +270,6 @@ export default {
 
     },
     methods:{
-        onFiltered(filteredItems) {
-          this.totalRows = filteredItems.length
-          this.currentPage = 1
-        },
         async fetchUsers(){
         let {data}=await UserRepository.getusers()
         console.log(data)
@@ -291,6 +286,19 @@ export default {
           'UserId',
           'UserName',
           'CompanyName',
+          'Email',
+          'CurrencyCode',
+          'UserWalletAmount',
+          'IsVerified',
+          'MobileNumber',
+          'LastCreated',
+          'StatusName'
+
+        ],
+        individual_fields: [
+          // A regular column
+          'UserId',
+          'UserName',
           'Email',
           'CurrencyCode',
           'UserWalletAmount',
