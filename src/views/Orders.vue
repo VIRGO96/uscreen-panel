@@ -290,7 +290,7 @@
     <b-modal id="actions" hide-header hide-footer>
       <b-container>
       <h5 class="text-primary pt-3 pb-4">Actions</h5>
-        <b-row v-if="focused_order.OrderStatusName=='Ready'">
+        <b-row v-if="focused_order.OrderStatusName=='Pending Payment'">
            <b-col >
             <b-button block pill variant="primary" class="pr-4 pl-4" v-b-modal.order-confirm @click="$bvModal.hide('actions')"> Confirm Payment</b-button>
 
