@@ -46,9 +46,15 @@ export default {
     },
    
     loggedUser() {
-      console.log("yehhh")
       if(this.loggedUser!=null) {
-        this.$router.push({path:'/users'})
+        if(localStorage.getItem("inside")==null){
+            localStorage.setItem("inside","yes")
+            this.$router.push({path:'/users'})
+        }
+        else{
+          console.log("redirect to same page")
+        }
+        // this.$router.push({path:'/users'})
          
       }
       else{

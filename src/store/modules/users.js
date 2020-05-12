@@ -43,6 +43,7 @@ const mutations = {
         state.loggedUser=null;
         localStorage.removeItem('uscreen-token')
         localStorage.removeItem('loggedUser')
+        localStorage.removeItem('inside')
 
     }
     
