@@ -208,6 +208,9 @@
             <template v-slot:head(CurrencyCode)="data">
               <span class="smalls">Currency</span>
             </template>
+            <template v-slot:head(SubTotal)="">
+              <span class="smalls">Price</span>
+            </template>
             <template v-slot:head(TotalAmount)="data">
               <span class="smalls">Prices</span>
             </template>
@@ -217,14 +220,14 @@
             <template v-slot:head(PaymentDate)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(LastCreated)="data">
-              <span class="smalls">{{ data.label }}</span>
+            <template v-slot:head(LastCreated)="">
+              <span class="smalls">Order Date</span>
             </template>
             <template v-slot:head(status)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
             <template v-slot:head(OrderStatusName)="data">
-              <span class="smalls">Order Status</span>
+              <span class="smalls">Payment Status</span>
             </template>
             
             <!-- Cells -->
@@ -638,6 +641,7 @@ export default {
           'PackageServiceName',
           'Candidate',
           'CurrencyCode',
+          'SubTotal',
           'LastCreated',
           'PaymentDate',
           'CandidateStatusName',
