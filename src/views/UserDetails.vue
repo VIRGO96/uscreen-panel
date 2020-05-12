@@ -124,8 +124,13 @@ export default {
       ...mapGetters(['allorders'])
     },
     created(){
-      console.log(this.UserKey)
-      this.fetchUserDetails()
+      if(this.UserKey==null){
+        this.$router.push({path:'/users'})
+
+      }
+      else{
+        this.fetchUserDetails() 
+      }
       
 
     },
