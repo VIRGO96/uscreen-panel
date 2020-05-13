@@ -30,9 +30,9 @@ export default {
   },
   methods:{
     async fetchOrders(){
-        let {data}=await OrderRepository.getorders()
+        let {data}=await OrderRepository.getorders(1)
         console.log(data)
-        this.$store.commit("setAllOrders",data.data.PageData)
+        this.$store.commit("setAllOrders",{PageData:data.data.PageData,HitsTotal:data.data.HitsTotal})
       }
   },
   watch:{
