@@ -10,9 +10,9 @@
         <b-row>
            <b-col md="6" cols="12" class="text-md-left">
              <div class="d-block d-md-flex">
-                <!-- <b-form-checkbox class="self-center"> -->
+                <b-form-checkbox v-model="search_params.package_flag" class="self-center">
                 Package
-              <!-- </b-form-checkbox> -->
+              </b-form-checkbox>
               <select v-model="search_params.package" name="" placeholder="Select Package" class="mt-xs-1 ml-md-5 form-control" id="">
                 <option value="1">Employer - Criminal Only</option>
                 <option value="2">Employer - Bronze</option>
@@ -27,9 +27,9 @@
                 <option value="11">Individual - Platinum</option>
                 <option value="12">Individual - Diamond</option>
               </select>
-               <div class="ml-1">
-                <b-button variant="primary" @click="searchIt('package')">Search</b-button>
-              </div>
+               <!-- <div class="ml-1">
+                <b-button variant="primary" @click="searchIt()">Search</b-button>
+              </div> -->
              </div>
 
            </b-col>
@@ -54,9 +54,9 @@
         <b-row class="mt-2">
            <b-col cols="12" md="8" class="text-md-left">
              <div class="d-block d-md-flex">
-                <!-- <b-form-checkbox class="mt-xs-1 self-center"> -->
+                <b-form-checkbox v-model="search_params.complete_flag" class="mt-xs-1 self-center">
                 Completion Date From
-              <!-- </b-form-checkbox> -->
+              </b-form-checkbox>
               <div class="ml-md-3 mt-xs-1">
               <b-form-datepicker v-model="search_params.completion_date_to" style="border-radius:1rem;" ></b-form-datepicker>
               </div>
@@ -64,9 +64,9 @@
               <div class="ml-1 mt-xs-1">
               <b-form-datepicker v-model="search_params.completion_date_from" style="border-radius:1rem;" ></b-form-datepicker>
               </div>
-              <div class="ml-1">
+              <!-- <div class="ml-1">
                 <b-button variant="primary" @click="searchIt('completion-date')">Search</b-button>
-              </div>
+              </div> -->
              </div>
 
            </b-col>
@@ -74,9 +74,9 @@
         <b-row class="mt-2">
            <b-col cols="12" md="8" class="text-md-left">
              <div class="d-block d-md-flex">
-                <!-- <b-form-checkbox class="mt-xs-1 self-center"> -->
-                Payment Date From
-              <!-- </b-form-checkbox> -->
+                <b-form-checkbox v-model="search_params.payment_flag" class="mt-xs-1 self-center">
+                  Payment Date From
+                </b-form-checkbox>
               <div class="ml-md-3 mt-xs-1">
               <b-form-datepicker v-model="search_params.payment_date_from" style="border-radius:1rem;" ></b-form-datepicker>
               </div>
@@ -84,9 +84,9 @@
               <div class="ml-1 mt-xs-1">
               <b-form-datepicker v-model="search_params.payment_date_to" style="border-radius:1rem;" ></b-form-datepicker>
               </div>
-              <div class="ml-1">
+              <!-- <div class="ml-1">
                 <b-button variant="primary" @click="searchIt('payment-date')">Search</b-button>
-              </div>
+              </div> -->
              </div>
 
            </b-col>
@@ -94,8 +94,8 @@
         <b-row>
            <b-col md="6" cols="12" class="mt-2 text-md-left">
              <div class="d-md-flex d-lg-flex d-none">               
-              <!-- <b-form-checkbox class="self-center">
-              </b-form-checkbox> -->
+              <b-form-checkbox v-model="search_params.payment_type_flag" class="self-center">
+              </b-form-checkbox>
               <div style="width:145px;" class="self-center">Payment Type</div>
                 <select name="" v-model="search_params.payment_type" placeholder="Select Package" class="form-control" id="">
                   <option value="1">Online</option>
@@ -103,18 +103,18 @@
                   <option value="3">Invoice</option>
                   
                 </select>
-                <div class="ml-1">
+                <!-- <div class="ml-1">
                   <b-button variant="primary" @click="searchIt('payment-type')">Search</b-button>
-                </div>
+                </div> -->
               </div>
 
            </b-col>
            <b-col md="6" cols="12" class="mt-2 text-center">
              <div class="d-md-none d-lg-none d-block">  
-              <!-- <b-form-checkbox class="mt-xs-1 self-center"> -->
+              <b-form-checkbox v-model="search_params.payment_type_flag" class="mt-xs-1 self-center">
                 Payment Type
-              <!-- </b-form-checkbox> -->
-                <select name="" placeholder="Select Package" class="mt-xs-1 form-control" id="">
+              </b-form-checkbox>
+                <select name="" v-model="search_params.payment_type" placeholder="Select Package" class="mt-xs-1 form-control" id="">
                   <option value="1">Online</option>
                   <option value="2">Bank Transfer</option>
                   <option value="3">Invoice</option>
@@ -127,8 +127,8 @@
         <b-row>
            <b-col md="6" class="mt-2 text-left">
              <div class="d-none d-md-flex">
-            <!-- <b-form-checkbox class="self-center">
-              </b-form-checkbox> -->
+              <b-form-checkbox v-model="search_params.status_flag" class="self-center">
+              </b-form-checkbox>
               <div style="width:145px;" class="self-center">Status</div>
               <select name="" v-model="search_params.status_id" placeholder="Select Status" class="form-control" id="">
                 <option value="1">Ready</option>
@@ -139,56 +139,58 @@
                 <option value="6">Done</option>
           
               </select>
-                <div class="ml-1">
+                <!-- <div class="ml-1">
                   <b-button variant="primary" @click="searchIt('order-status')">Search</b-button>
-                </div>
+                </div> -->
              </div>
 
            </b-col>
            <b-col md="6" cols="12" class="mt-2 text-center">
              <div class="d-md-none d-lg-none d-block">  
-              <b-form-checkbox class="mt-xs-1 self-center">
+              <b-form-checkbox v-model="search_params.status_flag" class="mt-xs-1 self-center">
                 Status
               </b-form-checkbox>
-                  <select name="" v-model="search_params.status_id" placeholder="Select Status" class="form-control" id="">
-                <option value="1">Ready</option>
-                <option value="2">Pending</option>
-                <option value="3">Refund</option>
-                <option value="4">Paid</option>
-                <option value="5">Expired</option>
-                <option value="6">Done</option>
-          
-              </select>
-          
+                <select name="" v-model="search_params.status_id" placeholder="Select Status" class="form-control" id="">
+                  <option value="1">Ready</option>
+                  <option value="2">Pending</option>
+                  <option value="3">Refund</option>
+                  <option value="4">Paid</option>
+                  <option value="5">Expired</option>
+                  <option value="6">Done</option>
+            
+                </select>
               </div>
 
            </b-col>
         </b-row>
       </div>
       <div class="mt-2 text-md-left d-flex">
+        <b-form-checkbox v-model="search_params.search_flag" class="self-center">
+        </b-form-checkbox>
         <div class="self-center">
         Search
         </div>
         <div class="ml-3">
         <input v-model="search_params.search" class=" border-hids form-control col-md-12">
         </div>
-        <div class="ml-1">
+        <!-- <div class="ml-1">
           <b-button variant="primary" @click="searchIt('search')">Search</b-button>
-        </div>
+        </div> -->
       </div>
        <div class="mt-2 mb-2 text-md-right">
-        <b-button  variant="primary" @click="clearfilters()" class="pr-4 mr-3 pl-4">Clear Filters</b-button>
-        <download-csv
+        <b-button size="sm" variant="primary" class="mr-3" @click="searchIt()">Search</b-button>
+        <b-button size="sm" variant="primary" @click="clearfilters()" class="pr-4 mr-3 pl-4">Clear Filters</b-button>
+        <b-button size="sm" variant="primary" class="pr-4 mr-3 pl-4">Excel</b-button>
+        <!-- <download-csv
           class   = "btn btn-primary"
           :data   = "allorders"
           name    = "orders.csv">      
           Excel
-          </download-csv>
+          </download-csv> -->
       </div>
-      <div>
-        <b-table :responsive="true"  striped hover :fields="fields" :items="view_able_orders"        
-          :current-page="currentPage"
-          :per-page="perPage">
+      <div >
+       <b-table v-if="orderLoad==false" :responsive="true" 
+           striped hover :fields="fields" :items="view_able_orders" >
             <template v-slot:head(OrderId)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
@@ -278,11 +280,19 @@
                
               
           </b-table>
+          <div v-else class="text-center">
+            
+              <b-spinner  variant="primary" label="Spinning"></b-spinner>
+
+          </div> 
+          
           <div class="float-right" >
+            
           <b-pagination
               v-model="currentPage"
               :total-rows="totalRows"
               :per-page="perPage"
+              @change="changeOrderItems"
               class="my-0"
               pills
           ></b-pagination>
@@ -395,122 +405,166 @@ export default {
     },
     watch:{
       view_able_orders(){
-          this.totalRows = this.view_able_orders.length
+          this.totalRows = this.orderpage
 
       },
       allorders(){
-          this.totalRows = this.allorders.length
+          this.totalRows = this.orderpage
           this.view_able_orders=this.allorders
 
       }
     },
     computed:{
-      ...mapGetters(['allorders','allusers']),
-      // filtered_orders(){
-      //   if(this.status_filter!=''){
-      //     const filtered=this.allorders.filter(item=>item.OrderStatusName==this.status_filter)
-      //     return filtered.filter(item=>item.PackageServiceName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-      //     item.Candidate.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-      //     item.Candidate.LastName.toLowerCase().includes(this.search_filter.toLowerCase()))
-
-      //   }
-      //   else{
-      //   // return this.allorders.filter(item=>item.PackageServiceName.toLowerCase().includes(this.search_filter.toLowerCase()))
-      //     return this.allorders.filter(item=>
-      //     item.Candidate.FirstName.toLowerCase().includes(this.search_filter.toLowerCase()) ||
-      //     item.Candidate.LastName.toLowerCase().includes(this.search_filter.toLowerCase()))
-
-
-      //   }
-         
-      // }
+      ...mapGetters(['allorders','allusers','orderpage']),
     },
     created(){
-      this.totalRows = this.allorders.length
-      this.fetchOrders()
+      this.totalRows = this.orderpage
+      this.fetchOrders(1)
       this.view_able_orders=this.allorders
 
 
     },
     methods:{
-      async searchIt(arg){
-        if(arg=='payment-date'){
-            console.log(this.search_params.payment_date_to)
-            console.log(this.search_params.payment_date_from)
-            let {data}=await OrderRepository.gePaymenttorders({from:this.search_params.payment_date_from,to:this.search_params.payment_date_to})
-            console.log(data.data.PageData.length)
-            if(data.data.PageData.length>0){
-                this.view_able_orders=data.data.PageData
-            }
-            else{
-                  this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-                  this.view_able_orders=[]
+      changeOrderItems(){
+        if (this.search_params.search_flag==false && this.search_params.package_flag==false
+         && this.search_params.status_flag==false && this.search_params.complete_flag==false 
+         && this.search_params.payment_type_flag==false && this.search_params.payment_flag==false){
+            this.fetchOrders(this.currentPage)
+        }
+        else{
+             this.searchIt()
+        }
+        
 
-
-            }
+      },
+      async searchIt(){
+        if (this.search_params.search_flag==false && this.search_params.package_flag==false
+         && this.search_params.status_flag==false && this.search_params.complete_flag==false 
+         && this.search_params.payment_type_flag==false && this.search_params.payment_flag==false){
+        this.$store.commit('setNotifications',{message:'No search filter activated',type:'error'})
 
         }
-        else if(arg=='completion-date'){
-            let {data}=await OrderRepository.getCompletionorders({from:this.search_params.completion_date_from,to:this.search_params.completion_date_to})
-            console.log(data.data.PageData)
-            if(data.data.PageData.length>0){
-                this.view_able_orders=data.data.PageData
-            }
-            else{
-                  this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-                  this.view_able_orders=[]
+        else{
 
+        
+        this.orderLoad=true
 
-            }
+        var link_url=''
+        if (this.search_params.package_flag==true){
+          link_url=link_url+`&PackageServiceId=${this.search_params.package}`
+        }
+        if(this.search_params.complete_flag==true){
+          link_url=link_url+`&OrderCreatedFrom=${this.search_params.completion_date_from}&OrderCreatedTo=${this.search_params.completion_date_to}`
+        }
+        
+        if (this.search_params.payment_flag==true){
+          link_url=link_url+`&PaymentDateFrom=${this.search_params.payment_date_from}&PaymentDateTo=${this.search_params.payment_date_to}`
 
         }
-        else if(arg=='payment-type') {
-            let {data}=await OrderRepository.getPaymentOrders({PaymentTypeId:this.search_params.payment_type})
-            console.log(data.data.PageData)
-            if(data.data.PageData.length>0){
-                this.view_able_orders=data.data.PageData
-            }
-            else{
-                  this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-                  this.view_able_orders=[]
-            }
+        if(this.search_params.payment_type_flag==true){
+          link_url=link_url+`&PaymentTypeId=${this.search_params.payment_type}`
 
         }
-        else if(arg=='order-status') {
-            let {data}=await OrderRepository.getStatusOrders({OrderStatusId:this.search_params.status_id})
-            console.log(data.data.PageData)
-            if(data.data.PageData.length>0){
-                this.view_able_orders=data.data.PageData
-            }
-            else{
-                  this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-                  this.view_able_orders=[]
-            }
+        if(this.search_params.status_flag==true){
+            link_url=link_url+`&OrderStatusId=${this.search_params.status_id}`
 
         }
-        else if(arg=='search') {
-            let {data}=await OrderRepository.getSearchOrders({search:this.search_params.search})
-            console.log(data.data.PageData)
-            if(data.data.PageData.length>0){
-                this.view_able_orders=data.data.PageData
-            }
-            else{
-                  this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-                  this.view_able_orders=[]
-            }
+        if(this.search_params.search_flag==true){
+          link_url=link_url+`&s=${this.search_params.search}`
+        }
+        let {data}=await OrderRepository.searchAll({pagenum:this.currentPage,url:link_url})
+        if(data.data.PageTotal>0){
+
+        this.$store.commit("setOrderCount",{HitsTotal:data.data.PageTotal})
+        this.view_able_orders=data.data.PageData
 
         }
-        else if(arg=='package'){
-          let {data}=await OrderRepository.getPackageOrders({PackageServiceId:this.search_params.package})
-            console.log(data.data.PageData)
-            if(data.data.PageData.length>0){
-                this.view_able_orders=data.data.PageData
-            }
-            else{
-                  this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-                  this.view_able_orders=[]
-            }
+        else{
+        this.$store.commit("setOrderCount",{HitsTotal:0})
+        this.view_able_orders=[]
+        this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+
         }
+        this.orderLoad=false
+        }
+
+
+        // if(arg=='payment-date') {
+        //     console.log(this.search_params.payment_date_to)
+        //     console.log(this.search_params.payment_date_from)
+        //     let {data}=await OrderRepository.gePaymenttorders({pagenum:this.currentPage,from:this.search_params.payment_date_from,to:this.search_params.payment_date_to})
+        //     console.log(data)
+        //     this.totalRows=data.data.PageTotal
+        //     if(data.data.PageData.length>0){
+        //         this.view_able_orders=data.data.PageData
+        //     }
+        //     else {
+        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+        //           this.view_able_orders=[]
+        //     }
+
+        // }
+        // else if(arg=='completion-date'){
+        //     let {data}=await OrderRepository.getCompletionorders({from:this.search_params.completion_date_from,to:this.search_params.completion_date_to})
+        //     console.log(data.data.PageData)
+        //     if(data.data.PageData.length>0){
+        //         this.view_able_orders=data.data.PageData
+        //     }
+        //     else{
+        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+        //           this.view_able_orders=[]
+
+
+        //     }
+
+        // }
+        // else if(arg=='payment-type') {
+        //     let {data}=await OrderRepository.getPaymentOrders({PaymentTypeId:this.search_params.payment_type})
+        //     console.log(data.data.PageData)
+        //     if(data.data.PageData.length>0){
+        //         this.view_able_orders=data.data.PageData
+        //     }
+        //     else{
+        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+        //           this.view_able_orders=[]
+        //     }
+
+        // }
+        // else if(arg=='order-status') {
+        //     let {data}=await OrderRepository.getStatusOrders({OrderStatusId:this.search_params.status_id})
+        //     console.log(data.data.PageData)
+        //     if(data.data.PageData.length>0){
+        //         this.view_able_orders=data.data.PageData
+        //     }
+        //     else{
+        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+        //           this.view_able_orders=[]
+        //     }
+
+        // }
+        // else if(arg=='search') {
+        //     let {data}=await OrderRepository.getSearchOrders({search:this.search_params.search})
+        //     console.log(data.data.PageData)
+        //     if(data.data.PageData.length>0){
+        //         this.view_able_orders=data.data.PageData
+        //     }
+        //     else{
+        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+        //           this.view_able_orders=[]
+        //     }
+
+        // }
+        // else if(arg=='package'){
+        //   let {data}=await OrderRepository.getPackageOrders({PackageServiceId:this.search_params.package})
+        //     console.log(data.data.PageData)
+        //     if(data.data.PageData.length>0){
+        //         this.view_able_orders=data.data.PageData
+        //     }
+        //     else{
+        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
+        //           this.view_able_orders=[]
+        //     }
+        // }
         
       },
       async confirmSettlement() {
@@ -522,14 +576,13 @@ export default {
                 this.confirm_settlement_obj.UserKey=this.focused_order.UserKey
                 let {data}= await OrderRepository.edit_order(this.confirm_settlement_obj)
                 .catch(error => {
-                console.log(error)
                     this.$store.commit('setNotifications',{message:error.response.data.Message,type:'error'})
                     this.isLoad=false
 
                 });
                 if(data.status=='Success'){
                   this.$bvModal.hide('order-confirm')
-                  this.fetchOrders()
+                  this.fetchOrders(this.currentPage)
                   this.$store.commit('setNotifications',{message:'Order confirmed successfully',type:'success'})
                 }
                 else{
@@ -565,15 +618,24 @@ export default {
       },
       clearfilters(){
         this.search_params={
+            search_flag:false,
+            status_flag:false,
+            payment_type_flag:false,
+            payment_flag:false,
+            complete_flag:false,
+            package_flag:false,
             payment_type:'',
             order_status:'',
             payment_date_to:'',
             payment_date_from:'',
             completion_date_to:'',
             completion_date_from:'',
-            
+            status_id:'',
+            search:'',
+            package:''
           }
           this.view_able_orders=this.allorders
+          this.fetchOrders(1)
 
       },
       async cancelOrder(type){
@@ -588,7 +650,7 @@ export default {
         
         if(data.status=='Success'){
           this.$bvModal.hide('order-cancel')
-          this.fetchOrders()
+          this.fetchOrders(this.currentPage)
         this.$store.commit('setNotifications',{message:'Order cancelled successfully',type:'success'})
 
         }
@@ -598,15 +660,26 @@ export default {
         }
 
       },
-      async fetchOrders(){
-        let {data}=await OrderRepository.getorders()
-        this.$store.commit("setAllOrders",data.data.PageData)
+      async fetchOrders(pagenum){
+        this.orderLoad=true
+        let {data}=await OrderRepository.getorders(pagenum)
+        this.$store.commit("setAllOrders",{PageData:data.data.PageData,HitsTotal:data.data.HitsTotal})
+        this.orderLoad=false
+
       }
     },
     data() {
         return {
+          
+          orderLoad:false,
           view_able_orders:[],
           search_params:{
+            search_flag:false,
+            status_flag:false,
+            payment_type_flag:false,
+            payment_flag:false,
+            complete_flag:false,
+            package_flag:false,
             payment_type:'',
             order_status:'',
             payment_date_to:'',
@@ -649,12 +722,7 @@ export default {
           'OrderStatusName'      
 
         ],
-        // 'TotalAmount',
 
-        //   'status',
-        // 'Candidate',
-        //   'UserId',
-        //   'CandidateStatusName',
         totalRows: 1,
         currentPage: 1,
         perPage: 5,
