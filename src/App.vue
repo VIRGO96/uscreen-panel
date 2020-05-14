@@ -9,6 +9,7 @@ import {mapGetters} from 'vuex'
 import nativeToast from 'native-toast'
 import { RepositoryFactory } from './Repository/RepositoryFactory'
 const OrderRepository = RepositoryFactory.get('order_repository')
+const UserRepository = RepositoryFactory.get('user_repository')
 
 
 export default {
@@ -16,6 +17,7 @@ export default {
     ...mapGetters(['notifications','loggedUser'])
   },
   created(){
+      this.fetchCompanies()
 
       console.log(localStorage.getItem("loggedUser"))
       if(localStorage.getItem("loggedUser")!=null){
@@ -29,6 +31,11 @@ export default {
       }
   },
   methods:{
+     async fetchCompanies(){
+        let {data} =await UserRepository.getusercompanies()
+        // console.log(data.data)
+        this.$store.commit("setCompanies",data.data)
+    },
     async fetchOrders(){
         let {data}=await OrderRepository.getorders(1)
         console.log(data)
