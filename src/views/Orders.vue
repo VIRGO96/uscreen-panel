@@ -180,7 +180,7 @@
        <div class="mt-2 mb-2 text-md-right">
         <b-button size="sm" variant="primary" class="mr-3" @click="searchIt()">Search</b-button>
         <b-button size="sm" variant="primary" @click="clearfilters()" class="pr-4 mr-3 pl-4">Clear Filters</b-button>
-        <b-button size="sm" variant="primary" class="pr-4 mr-3 pl-4">Excel</b-button>
+        <b-button size="sm" variant="primary" @click="downloadExcel()" class="pr-4 mr-3 pl-4">Excel</b-button>
         <!-- <download-csv
           class   = "btn btn-primary"
           :data   = "allorders"
@@ -194,9 +194,20 @@
             <template v-slot:head(OrderId)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
-            <template v-slot:head(PackageServiceName)="data">
+            <template v-slot:head(ReferenceId)="">
+              <span class="smalls">ReferenceId</span>
+            </template>
+            <template v-slot:head(UserId)="">
+              <span class="smalls">UserId</span>
+            </template>
+            <template v-slot:head(PaymentReference)="">
+              <span class="smalls">TransactionId</span>
+            </template>
+            
+            <template v-slot:head(PackageServiceName)="">
               <span class="smalls">Package Name</span>
             </template>
+            
             <template v-slot:head(Candidate)="data">
               <span class="smalls">{{ data.label }}</span>
             </template>
@@ -210,6 +221,7 @@
             <template v-slot:head(CurrencyCode)="data">
               <span class="smalls">Currency</span>
             </template>
+            
             <template v-slot:head(SubTotal)="">
               <span class="smalls">Price</span>
             </template>
@@ -235,6 +247,12 @@
             <!-- Cells -->
             <template v-slot:cell(OrderId)="data">
                 <span class="smalls">{{data.item.OrderNumber}} </span> 
+            </template>
+            <template v-slot:cell(ReferenceId)="data">
+              <span class="smalls">{{data.item.ReferenceId}}</span>
+            </template>
+            <template v-slot:cell(PaymentReference)="data">
+              <span class="smalls">{{data.item.PaymentReference}}</span>
             </template>
             
             <template v-slot:cell(PackageServiceName)="data">
@@ -404,6 +422,10 @@ export default {
         SecondaryHeader
     },
     watch:{
+      fileurl(){
+        clearTimeout(this.timers);
+
+      },
       view_able_orders(){
           this.totalRows = this.orderpage
 
@@ -425,6 +447,18 @@ export default {
 
     },
     methods:{
+      async downloadExcel(){
+        let resp=await OrderRepository.userExport()
+        this.timers=setTimeout(async () => {
+        let {data}=await OrderRepository.userExportFile(resp.data.data.ExportKey)
+           if(data.data.File!=null){
+             this.fileurl=data.data.File
+             window.open(this.fileurl)
+           }
+          
+        }, 1000);
+          
+      },
       changeOrderItems(){
         if (this.search_params.search_flag==false && this.search_params.package_flag==false
          && this.search_params.status_flag==false && this.search_params.complete_flag==false 
@@ -695,6 +729,7 @@ export default {
           focused_order:'',
           isLoad:false,
           search_filter:'',
+          fileurl:'',
           confirm_settlement_obj:{
             OrderId:'',
             PaymentReference:'',
@@ -703,6 +738,7 @@ export default {
             UserKey:'',
             Type:'INVOICE' 
           },
+          timers:'',
           order_obj:{
            Type: '',
            OrderKey:'',
@@ -711,8 +747,11 @@ export default {
          fields: [
           // A regular column
           'OrderId',
+          'ReferenceId',
           'PackageServiceName',
           'Candidate',
+          'PaymentReference',
+          'UserId',
           'CurrencyCode',
           'SubTotal',
           'LastCreated',
