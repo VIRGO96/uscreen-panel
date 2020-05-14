@@ -1,7 +1,7 @@
 import Repository from './Repository';
 const order_update_resource = 'order/update';
 const order_list_resource = 'order/item/list';
-const user_resource = 'user/export';
+const order_resource = 'order/export';
 
 export default {
   getorders(pagenum) {
@@ -33,10 +33,10 @@ export default {
     return Repository.get(`${order_list_resource}?Page=${payload.pagenum}&Size=5`+payload.url)
   },
   userExport() {
-    return Repository.post(`${user_resource}`);
+    return Repository.post(`${order_resource}`);
   },
   userExportFile(payload) {
-    return Repository.get(`${user_resource}/history?ExportKey=`+payload);
+    return Repository.get(`${order_resource}/history?ExportKey=`+payload);
   },
 
    
