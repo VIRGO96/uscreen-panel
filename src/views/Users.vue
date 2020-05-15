@@ -217,7 +217,8 @@ export default {
         }, 1000);
           
       },
-      changeUserItems(){
+      changeUserItems(arg){
+        this.currentPage=arg
         if (this.search_params.search_flag==false && this.search_params.email_flag==false
             && this.search_params.sign_up_flag==false && this.search_params.company_flag==false ){
               this.fetchUsers(this.currentPage)
@@ -274,6 +275,7 @@ export default {
         },
         async fetchUsers(pagenum) {
           this.orderLoad=true
+          console.log(pagenum)
           if(this.active_user=='Employers'){
           let {data}=await UserRepository.getusers({pagenum:pagenum,id:3})
           // console.log(data)            

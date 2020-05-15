@@ -441,7 +441,7 @@ export default {
     },
     created(){
       this.totalRows = this.orderpage
-      this.fetchOrders(1)
+      this.fetchOrders()
       this.view_able_orders=this.allorders
 
 
@@ -459,11 +459,12 @@ export default {
         }, 1000);
           
       },
-      changeOrderItems(){
+      changeOrderItems(ogpage){
+        this.currentPage=ogpage
         if (this.search_params.search_flag==false && this.search_params.package_flag==false
          && this.search_params.status_flag==false && this.search_params.complete_flag==false 
          && this.search_params.payment_type_flag==false && this.search_params.payment_flag==false){
-            this.fetchOrders(this.currentPage)
+            this.fetchOrders()
         }
         else{
              this.searchIt()
@@ -616,7 +617,7 @@ export default {
                 });
                 if(data.status=='Success'){
                   this.$bvModal.hide('order-confirm')
-                  this.fetchOrders(this.currentPage)
+                  this.fetchOrders()
                   this.$store.commit('setNotifications',{message:'Order confirmed successfully',type:'success'})
                 }
                 else{
@@ -669,7 +670,7 @@ export default {
             package:''
           }
           this.view_able_orders=this.allorders
-          this.fetchOrders(1)
+          this.fetchOrders()
 
       },
       async cancelOrder(type){
@@ -684,7 +685,7 @@ export default {
         
         if(data.status=='Success'){
           this.$bvModal.hide('order-cancel')
-          this.fetchOrders(this.currentPage)
+          this.fetchOrders()
         this.$store.commit('setNotifications',{message:'Order cancelled successfully',type:'success'})
 
         }
@@ -694,9 +695,10 @@ export default {
         }
 
       },
-      async fetchOrders(pagenum){
+      async fetchOrders(){
         this.orderLoad=true
-        let {data}=await OrderRepository.getorders(pagenum)
+        console.log(this.currentPage)
+        let {data}=await OrderRepository.getorders(this.currentPage)
         this.$store.commit("setAllOrders",{PageData:data.data.PageData,HitsTotal:data.data.HitsTotal})
         this.orderLoad=false
 
