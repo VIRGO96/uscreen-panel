@@ -69,7 +69,7 @@
        <div class="mt-2 mb-2 text-md-right">
           <b-button size="sm" variant="primary" class="mr-3" @click="searchIt()">Search</b-button>
           <b-button size="sm" variant="primary" @click="clearfilter()" class="pr-4 mr-3 pl-4">Clear Filters</b-button>
-          <b-button size="sm" variant="primary" @click="downloadExcel()" class="pr-4 mr-3 pl-4">Excel</b-button>
+          <b-button size="sm" variant="primary" :disabled="excelFlag==true ? true:false" @click="downloadExcel()" class="pr-4 mr-3 pl-4">Excel</b-button>
 
         </div>
       <div>
@@ -179,6 +179,7 @@ export default {
     watch:{
       fileurl(){
         clearTimeout(this.timers);
+        this.excelFlag=false
 
       },
     },
@@ -206,6 +207,7 @@ export default {
 
       },
      async downloadExcel(){
+       this.excelFlag=true
         let resp=await UserRepository.userExport()
         this.timers=setTimeout(async () => {
         let {data}=await UserRepository.userExportFile(resp.data.data.ExportKey)
@@ -336,6 +338,7 @@ export default {
           'StatusName'
 
         ],
+        excelFlag:false,
         timers:'',
         fileurl:'',
         totalRows: 1,
