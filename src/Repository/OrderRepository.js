@@ -25,8 +25,8 @@ export default {
   getPackageOrders(payload) {
     return Repository.get(`${order_list_resource}&PackageServiceId=${payload.PackageServiceId}`)
   },
-  getSearchOrders(payload) {
-    return Repository.get(`${order_list_resource}&s=${payload.search}`)
+  getSearchOrderById(payload) {
+    return Repository.get(`${order_list_resource}?OrdeNumber=${payload}`)
   },
   // 
   searchAll(payload) {

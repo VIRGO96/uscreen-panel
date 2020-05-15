@@ -138,24 +138,30 @@ export default {
       async refundOrder() {
         // console.log(this.refund_obj)
         // this.$store.commit('setNotifications',{message:'Order created successfully',type:'success'})
+         let {data} = await OrderRepository.getSearchOrderById(this.refund_obj.OrderId)
+         console.log(data)
+         if(data.data.PageData.length>0){
+           this.refund_obj.OrderKey=data.data.PageData[0].OrderKey
+           console.log(this.refund_obj)
+            let resp=await OrderRepository.edit_order(this.refund_obj)
+            .catch(error => {
+              console.log(error.response)
+              this.$store.commit('setNotifications',{message:error.response.data.Message,type:'error'})
+              return
+            });
+            if(resp!=null){
+              //  if(resp.data.data.status=='Success'){
+                this.$store.commit("setNotifications",{message:'Refund completed successfully',type:'success'})
+                this.$bvModal.hide('modal-1')
+              // }
+              // else{
+              //     this.$store.commit('setNotifications',{message:'Order not refunded',type:'error'})
 
-        let tempkey=this.allorders.find(item=>item.OrderId==this.refund_obj.OrderId)
-        console.log(tempkey)
-        if(tempkey!=null){
-          this.refund_obj.OrderKey=tempkey.OrderKey
-          let {data}=await OrderRepository.edit_order(this.refund_obj)
-        console.log(data)
-        if(data.status=='Success'){
-          console.log("h")
-          this.$store.commit("setNotifications",{message:'Refund completed successfully',type:'success'})
-          this.$bvModal.hide('modal-1')
-        }
-        else{
-            this.$store.commit('setNotifications',{message:'Order not refunded',type:'error'})
+              // }
+            }
 
-        }
-
-      }
+         }
+        
       else{
           this.$store.commit('setNotifications',{message:'Order not found',type:'error'})
 
