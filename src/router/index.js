@@ -11,18 +11,27 @@ const routes = [
   {
     path: '/users',
     name: 'Users',
-    component: Users
+    component: Users,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/orders',
     name: 'Orders',
-    component: Orders
+    component: Orders,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/user-details',
     name: 'UserDetails',
     component: UserDetails,
-    props:true
+    props:true,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/',
