@@ -610,8 +610,9 @@ export default {
         
       },
       async confirmSettlement() {
-       
-          if(this.focused_order.OrderNumber==this.confirm_settlement_obj.OrderId){
+          var realOrderId = this.focused_order.OrderNumber.substring(0, this.focused_order.OrderNumber.indexOf('-'));
+          if(realOrderId==this.confirm_settlement_obj.OrderId){
+          // if(this.focused_order.OrderNumber==this.confirm_settlement_obj.OrderId){
             if(this.retransaction_id==this.confirm_settlement_obj.PaymentReference){
                 this.isLoad=true
                 this.confirm_settlement_obj.OrderKey=this.focused_order.OrderNumber
