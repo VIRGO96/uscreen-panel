@@ -101,7 +101,8 @@
                   <option value="1">Online</option>
                   <option value="2">Bank Transfer</option>
                   <option value="3">Invoice</option>
-                  
+                  <option value="4">Wallet</option>
+                  <option value="6">Refund to Wallet</option>
                 </select>
                 <!-- <div class="ml-1">
                   <b-button variant="primary" @click="searchIt('payment-type')">Search</b-button>
@@ -118,6 +119,8 @@
                   <option value="1">Online</option>
                   <option value="2">Bank Transfer</option>
                   <option value="3">Invoice</option>
+                  <option value="4">Wallet</option>
+                  <option value="6">Refund to Wallet</option>
                   
                 </select>
               </div>
