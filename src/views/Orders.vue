@@ -204,7 +204,7 @@
               <span class="smalls">TransactionId</span>
             </template>
             
-            <template v-slot:head(PackageServiceName)="">
+            <template v-slot:head(PackageName)="">
               <span class="smalls">Package Name</span>
             </template>
             
@@ -255,8 +255,8 @@
               <span class="smalls">{{data.item.PaymentReference}}</span>
             </template>
             
-            <template v-slot:cell(PackageServiceName)="data">
-              <span class="smalls">{{ data.item.PackageServiceName }}</span>
+            <template v-slot:cell(PackageName)="data">
+              <span class="smalls">{{ data.item.PackageName }}</span>
             </template>
             <template v-slot:cell(Candidate)="data">
               <span class="smalls">{{ data.item.FirstName }} {{data.item.LastName}}</span>
@@ -755,7 +755,7 @@ export default {
           // A regular column
           'OrderId',
           'ReferenceId',
-          'PackageServiceName',
+          'PackageName',
           'Candidate',
           'PaymentReference',
           'UserId',
