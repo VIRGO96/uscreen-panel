@@ -614,7 +614,7 @@ export default {
           if(this.focused_order.OrderNumber==this.confirm_settlement_obj.OrderId){
             if(this.retransaction_id==this.confirm_settlement_obj.PaymentReference){
                 this.isLoad=true
-                this.confirm_settlement_obj.OrderKey=this.focused_order.OrderKey
+                this.confirm_settlement_obj.OrderKey=this.focused_order.OrderNumber
                 this.confirm_settlement_obj.UserKey=this.focused_order.UserKey
                 let {data}= await OrderRepository.edit_order(this.confirm_settlement_obj)
                 .catch(error => {
