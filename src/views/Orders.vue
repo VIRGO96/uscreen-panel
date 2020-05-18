@@ -195,16 +195,16 @@
        <b-table v-if="orderLoad==false" :responsive="true" 
            striped hover :fields="fields" :items="view_able_orders" >
             <template v-slot:head(OrderId)="data">
-              <span class="smalls">{{ data.label }}</span>
+              <span class="smalls">Order ID</span>
             </template>
             <template v-slot:head(ReferenceId)="">
-              <span class="smalls">ReferenceId</span>
+              <span class="smalls">Reference ID</span>
             </template>
             <template v-slot:head(UserId)="">
-              <span class="smalls">UserId</span>
+              <span class="smalls">User ID</span>
             </template>
             <template v-slot:head(PaymentReference)="">
-              <span class="smalls">TransactionId</span>
+              <span class="smalls">Transaction ID</span>
             </template>
             
             <template v-slot:head(PackageName)="">
@@ -219,7 +219,7 @@
             </template>
             
             <template v-slot:head(UserId)="data">
-              <span class="smalls">{{ data.label }}</span>
+              <span class="smalls">User ID</span>
             </template>
             <template v-slot:head(CurrencyCode)="data">
               <span class="smalls">Currency</span>
@@ -634,12 +634,12 @@ export default {
 
             }
             else{
-                this.$store.commit('setNotifications',{message:'Transaction Id and Confirmed Transaction id are not same',type:'error'})
+                this.$store.commit('setNotifications',{message:'Transaction ID and Confirmed Transaction ID are not same',type:'error'})
             }
               
           }
           else{
-                this.$store.commit('setNotifications',{message:'Order id not matching to the selected order',type:'error'})
+                this.$store.commit('setNotifications',{message:'Order ID not matching to the selected order',type:'error'})
 
           }
 
