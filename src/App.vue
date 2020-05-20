@@ -10,6 +10,7 @@ import nativeToast from 'native-toast'
 import { RepositoryFactory } from './Repository/RepositoryFactory'
 const OrderRepository = RepositoryFactory.get('order_repository')
 const UserRepository = RepositoryFactory.get('user_repository')
+import Repository from './Repository/Repository'
 
 
 export default {
@@ -19,33 +20,26 @@ export default {
   created(){
       this.fetchCompanies()
 
-      console.log(localStorage.getItem("loggedUser"))
       if(localStorage.getItem("loggedUser")!=null){
-        console.log("yahs")
         this.$store.commit("setLoggedUser",JSON.parse(localStorage.getItem("loggedUser")))
+        Repository.defaults.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('uscreen-token'))}`;
         this.fetchOrders()
 
-      }
-      else{
-        console.log("mahh")
       }
   },
   methods:{
      async fetchCompanies(){
         let {data} =await UserRepository.getusercompanies()
-        // console.log(data.data)
         this.$store.commit("setCompanies",data.data)
     },
     async fetchOrders(){
         let {data}=await OrderRepository.getorders(1)
-        console.log(data)
         this.$store.commit("setAllOrders",{PageData:data.data.PageData,HitsTotal:data.data.HitsTotal})
       }
   },
   watch:{
     '$route.name': {
         handler: function(route)  {
-          console.log(route)
           this.$store.commit("changeRoute",route)
         },
         deep: true,
