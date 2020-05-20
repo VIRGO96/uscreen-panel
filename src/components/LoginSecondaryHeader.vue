@@ -47,6 +47,7 @@
 
 import { RepositoryFactory } from '../Repository/RepositoryFactory'
 const UserRepository = RepositoryFactory.get('user_repository')
+import Repository from '../Repository/Repository'
 
 export default {
   name: 'SecondaryHeader',
@@ -68,6 +69,8 @@ export default {
               this.$store.commit('setNotifications',{message:error.response.data.Message,type:'error'})
           });
           if(response!=null) {
+            Repository.defaults.headers.Authorization = `Bearer ${response.data.data.Token}`;
+
             this.$store.commit("setLoggedUser",response.data.data)
           }     
 
