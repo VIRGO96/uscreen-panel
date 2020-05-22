@@ -514,7 +514,7 @@ export default {
         let {data}=await OrderRepository.searchAll({pagenum:this.currentPage,url:link_url})
         if(data.data.PageTotal>0){
 
-        this.$store.commit("setOrderCount",{HitsTotal:data.data.PageTotal})
+        this.$store.commit("setOrderCount",{HitsTotal:data.data.HitsTotal})
         this.view_able_orders=data.data.PageData
 
         }
@@ -528,82 +528,6 @@ export default {
         }
 
 
-        // if(arg=='payment-date') {
-        //     console.log(this.search_params.payment_date_to)
-        //     console.log(this.search_params.payment_date_from)
-        //     let {data}=await OrderRepository.gePaymenttorders({pagenum:this.currentPage,from:this.search_params.payment_date_from,to:this.search_params.payment_date_to})
-        //     console.log(data)
-        //     this.totalRows=data.data.PageTotal
-        //     if(data.data.PageData.length>0){
-        //         this.view_able_orders=data.data.PageData
-        //     }
-        //     else {
-        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-        //           this.view_able_orders=[]
-        //     }
-
-        // }
-        // else if(arg=='completion-date'){
-        //     let {data}=await OrderRepository.getCompletionorders({from:this.search_params.completion_date_from,to:this.search_params.completion_date_to})
-        //     console.log(data.data.PageData)
-        //     if(data.data.PageData.length>0){
-        //         this.view_able_orders=data.data.PageData
-        //     }
-        //     else{
-        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-        //           this.view_able_orders=[]
-
-
-        //     }
-
-        // }
-        // else if(arg=='payment-type') {
-        //     let {data}=await OrderRepository.getPaymentOrders({PaymentTypeId:this.search_params.payment_type})
-        //     console.log(data.data.PageData)
-        //     if(data.data.PageData.length>0){
-        //         this.view_able_orders=data.data.PageData
-        //     }
-        //     else{
-        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-        //           this.view_able_orders=[]
-        //     }
-
-        // }
-        // else if(arg=='order-status') {
-        //     let {data}=await OrderRepository.getStatusOrders({OrderStatusId:this.search_params.status_id})
-        //     console.log(data.data.PageData)
-        //     if(data.data.PageData.length>0){
-        //         this.view_able_orders=data.data.PageData
-        //     }
-        //     else{
-        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-        //           this.view_able_orders=[]
-        //     }
-
-        // }
-        // else if(arg=='search') {
-        //     let {data}=await OrderRepository.getSearchOrders({search:this.search_params.search})
-        //     console.log(data.data.PageData)
-        //     if(data.data.PageData.length>0){
-        //         this.view_able_orders=data.data.PageData
-        //     }
-        //     else{
-        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-        //           this.view_able_orders=[]
-        //     }
-
-        // }
-        // else if(arg=='package'){
-        //   let {data}=await OrderRepository.getPackageOrders({PackageServiceId:this.search_params.package})
-        //     console.log(data.data.PageData)
-        //     if(data.data.PageData.length>0){
-        //         this.view_able_orders=data.data.PageData
-        //     }
-        //     else{
-        //           this.$store.commit('setNotifications',{message:'No search results',type:'error'})
-        //           this.view_able_orders=[]
-        //     }
-        // }
         
       },
       async confirmSettlement() {
@@ -771,7 +695,7 @@ export default {
 
         totalRows: 1,
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
             
         }
     }
