@@ -266,7 +266,6 @@ export default {
             link_url=link_url+`&UserRoleId=2`
             
           }
-          console.log(link_url)
           let {data}=await UserRepository.searchAll({pagenum:this.currentPage,url:link_url})
           this.totalRows=data.data.HitsTotal
           this.view_able_users=data.data.PageData
@@ -343,7 +342,7 @@ export default {
         fileurl:'',
         totalRows: 1,
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
             
         }
     }
