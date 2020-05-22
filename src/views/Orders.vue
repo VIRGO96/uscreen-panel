@@ -101,7 +101,8 @@
                   <option value="1">Online</option>
                   <option value="2">Bank Transfer</option>
                   <option value="3">Invoice</option>
-                  
+                  <option value="4">Wallet</option>
+                  <option value="6">Refund to Wallet</option>
                 </select>
                 <!-- <div class="ml-1">
                   <b-button variant="primary" @click="searchIt('payment-type')">Search</b-button>
@@ -118,6 +119,8 @@
                   <option value="1">Online</option>
                   <option value="2">Bank Transfer</option>
                   <option value="3">Invoice</option>
+                  <option value="4">Wallet</option>
+                  <option value="6">Refund to Wallet</option>
                   
                 </select>
               </div>
@@ -192,19 +195,19 @@
        <b-table v-if="orderLoad==false" :responsive="true" 
            striped hover :fields="fields" :items="view_able_orders" >
             <template v-slot:head(OrderId)="data">
-              <span class="smalls">{{ data.label }}</span>
+              <span class="smalls">Order ID</span>
             </template>
             <template v-slot:head(ReferenceId)="">
-              <span class="smalls">ReferenceId</span>
+              <span class="smalls">Reference ID</span>
             </template>
             <template v-slot:head(UserId)="">
-              <span class="smalls">UserId</span>
+              <span class="smalls">User ID</span>
             </template>
             <template v-slot:head(PaymentReference)="">
-              <span class="smalls">TransactionId</span>
+              <span class="smalls">Transaction ID</span>
             </template>
             
-            <template v-slot:head(PackageServiceName)="">
+            <template v-slot:head(PackageName)="">
               <span class="smalls">Package Name</span>
             </template>
             
@@ -216,7 +219,7 @@
             </template>
             
             <template v-slot:head(UserId)="data">
-              <span class="smalls">{{ data.label }}</span>
+              <span class="smalls">User ID</span>
             </template>
             <template v-slot:head(CurrencyCode)="data">
               <span class="smalls">Currency</span>
@@ -255,8 +258,8 @@
               <span class="smalls">{{data.item.PaymentReference}}</span>
             </template>
             
-            <template v-slot:cell(PackageServiceName)="data">
-              <span class="smalls">{{ data.item.PackageServiceName }}</span>
+            <template v-slot:cell(PackageName)="data">
+              <span class="smalls">{{ data.item.PackageName }}</span>
             </template>
             <template v-slot:cell(Candidate)="data">
               <span class="smalls">{{ data.item.FirstName }} {{data.item.LastName}}</span>
@@ -531,11 +534,12 @@ export default {
         
       },
       async confirmSettlement() {
-       
-          if(this.focused_order.OrderNumber==this.confirm_settlement_obj.OrderId){
+          var realOrderId = this.focused_order.OrderNumber.substring(0, this.focused_order.OrderNumber.indexOf('-'));
+          if(realOrderId==this.confirm_settlement_obj.OrderId){
+          // if(this.focused_order.OrderNumber==this.confirm_settlement_obj.OrderId){
             if(this.retransaction_id==this.confirm_settlement_obj.PaymentReference){
                 this.isLoad=true
-                this.confirm_settlement_obj.OrderKey=this.focused_order.OrderKey
+                this.confirm_settlement_obj.OrderKey=this.focused_order.OrderNumber
                 this.confirm_settlement_obj.UserKey=this.focused_order.UserKey
                 let {data}= await OrderRepository.edit_order(this.confirm_settlement_obj)
                 .catch(error => {
@@ -555,12 +559,12 @@ export default {
 
             }
             else{
-                this.$store.commit('setNotifications',{message:'Transaction Id and Confirmed Transaction id are not same',type:'error'})
+                this.$store.commit('setNotifications',{message:'Transaction ID and Confirmed Transaction ID are not same',type:'error'})
             }
               
           }
           else{
-                this.$store.commit('setNotifications',{message:'Order id not matching to the selected order',type:'error'})
+                this.$store.commit('setNotifications',{message:'Order ID not matching to the selected order',type:'error'})
 
           }
 
@@ -679,7 +683,7 @@ export default {
           // A regular column
           'OrderId',
           'ReferenceId',
-          'PackageServiceName',
+          'PackageName',
           'Candidate',
           'PaymentReference',
           'UserId',
