@@ -129,7 +129,10 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-
+th,
+td {
+  min-width: 200px !important;
+}
 #nav {
   padding: 30px;
 }
